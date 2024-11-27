@@ -1,0 +1,32 @@
+%%[
+    /* Declare variables */
+    var @dateColumn, @dateValue, @dataExtensionName
+    var @attributeToSearch, @valueToSearch, @formatDate
+
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
+
+    /* Set the attribute to search by in the data extension */
+    set @attributeToSearch = {{attributeToSearch}} 
+
+    /* Set the value to search for in the given attribute */
+    set @valueToSearch = {{valueToSearch}} 
+
+    /* Specify the date column to retrieve from the data extension */
+    set @dateColumn = {{datecolumn}} 
+
+    /* Fetch the date value from the data extension */
+    set @dateValue = LookUp(@dataExtensionName, @dateColumn, @attributeToSearch, @valueToSearch)
+
+    /* Validate if a value was returned */
+    if not empty(@dateValue) then
+        /* Format the fetched date into a localized French format */
+        set @formatDate = FormatDate(@dateValue, "L", , "fr_FR")
+
+        /* Output the formatted date value */
+        OutputLine(concat("Formatted Date in French: ", v(@formatDate)))
+    else
+        /* Handle cases where no date is returned */
+        OutputLine("No valid date found in the data extension.")
+    endif
+]%%
