@@ -1,0 +1,29 @@
+%%[
+    /* Declare variables */
+    var @dateColumn, @startDate, @endDate, @dateDiff
+    var @dataExtensionName, @attributeToSearch, @valueToSearch
+
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
+
+    /* Set the attribute to search by in the data extension */
+    set @attributeToSearch = {{attributeToSearch}} /* Placeholder for the search attribute */
+
+    /* Set the value to search for in the given attribute */
+    set @valueToSearch = {{valueToSearch}} /* Placeholder for the search value */
+
+    /* Specify the date column to retrieve from the data extension */
+    set @dateColumn = {{datecolumn}} /* Placeholder for the column containing the date */
+
+    /* Fetch the start date from the data extension */
+    set @startDate = LookUp(@dataExtensionName, @dateColumn, @attributeToSearch, @valueToSearch)
+
+    /* Add one day to the start date */
+    set @endDate = DateAdd(@startDate, 1, 'D')
+
+    /* Calculate the difference in hours between the start date and end date */
+    set @dateDiff = DateDiff(@startDate, @endDate, 'H')
+
+    /* Output the calculated date difference */
+    OutputLine(concat("Date Difference in Hours: ", v(@dateDiff)))
+]%%

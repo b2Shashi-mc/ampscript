@@ -1,24 +1,32 @@
 %%[
     /* Declare variables */
-    var @dateColumn, @datelater
+    var @dateColumn, @datelater, @dateValue, @dataExtensionName
+    var @attributeToSearch, @valueToSearch
 
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"
 
     /* Set the attribute to search by in the data extension */
-    set @attributeToSearch = {{attributeToSearch}}
+    set @attributeToSearch = {{attributeToSearch}} 
 
     /* Set the value to search for in the given attribute */
-    set @valueToSearch = {{valueToSearch}}
+    set @valueToSearch = {{valueToSearch}} 
 
-    /* Replace with a valid date value or field reference */
-    set @dateColumn = {{datecolumn}} 
+    /* Replace with the name of the date column to fetch */
+    set @dateColumn = {{datecolumn}}  
 
-    /* Add one day to the @dateColumn value */
-    set @datelater = DateAdd(@dateColumn, 1, 'D')
+    /* Fetch the date value from the data extension */
+    set @dateValue = LookUp(@dataExtensionName, @dateColumn, @attributeToSearch, @valueToSearch)
 
-    set @dateValue=LookUp(@dataExtensionName,@dateColumn,@attributeToSearch, @valueToSearch)
+    /* Validate if a value was returned */
+    if not empty(@dateValue) then
+        /* Add one day to the @dateValue value */
+        set @datelater = DateAdd(@dateValue, 1, 'D')
 
-    /* Output the new date value */
-    OutputLine(concat("New Date: ", v(@datelater)))
+        /* Output the new date value */
+        OutputLine(concat("New Date: ", v(@datelater)))
+    else
+        /* Handle cases where no date is returned */
+        OutputLine("No valid date found in the data extension.")
+    endif
 ]%%
