@@ -1,0 +1,43 @@
+%%[
+    /* Declare variables */
+    var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch, @rowCount, @index, @row
+    var @numberOfRows, @sortColumn
+    var @column1, @column2
+
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
+
+    /* Set the attribute to search by in the data extension (will be dynamically replaced) */
+    set @attributeToSearch = {{attributeToSearch}}
+
+    /* Set the value to search for in the given attribute (will be dynamically replaced) */
+    set @valueToSearch = {{valueToSearch}}
+
+    /* Set the attribute by which the results will be sorted */
+    set @sortColumn = {{attributeToSort}}
+
+    /* Get the total number of rows in the data extension */
+    set @numberOfRows = DataExtensionRowCount(@dataExtensionName)
+
+    /* Use the LookupOrderedRows function to fetch rows ordered by the specified column and sorted in descending order */
+    set @rows = LookupOrderedRowsCS(@dataExtensionName, @numberOfRows, 
+                                  concat(@sortColumn, " DESC"), @attributeToSearch, @valueToSearch)
+
+    /* Get the total number of rows returned by the LookupOrderedRows function */
+    set @rowCount = RowCount(@rows)
+
+    /* Check if any rows were returned */
+    if @rowCount > 0 then
+        /* Loop through each row and extract values for the specified columns */
+        for @index = 1 to @rowCount do
+            set @row = Row(@rows, @index)
+
+            /* Fetch values for the specified columns and assign them to variables */
+            set @{{column1}} = Field(@row, "{{column1}}")
+            set @{{column2}} = Field(@row, "{{column2}}")
+            
+            /* Optionally: Output the values for debugging or further use */
+            OutputLine(concat("{{column1}}: ", @{{column1}}, " {{column2}}: ", @{{column2}}))
+        next @index
+    endif
+]%%
