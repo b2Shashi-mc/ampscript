@@ -25,11 +25,11 @@
             set @row = Row(@rows, @index)
 
             /* Fetch values for the specified columns and assign them to variables */
-            set @column1 = Field(@row, "{{column1}}")
-            set @column2 = Field(@row, "{{column2}}")
+            set @{{column1}} = Field(@row, "{{column1}}")
+            set @{{column2}} = Field(@row, "{{column2}}")
             
             /* Optionally: you can output these values for debugging or further use */
-            OutputLine(concat("Column 1: ", @column1, " Column 2: ", @column2))
+            OutputLine(concat("{{column1}}: ", @{{column1}}, " {{column2}}: ", @{{column2}}))
         next @index
     endif
 ]%%
