@@ -19,7 +19,8 @@
     /* Get the total number of rows in the data extension */
     set @numberOfRows = DataExtensionRowCount(@dataExtensionName)
 
-    /* Use the LookupOrderedRows function to fetch rows ordered by the specified column and sorted in descending order */
+    /* Use the LookupOrderedRows function to fetch rows ordered by 
+    the specified column and sorted in descending order */
     set @rows = LookupOrderedRowsCS(@dataExtensionName, @numberOfRows, 
                                   concat(@sortColumn, " DESC"), @attributeToSearch, @valueToSearch)
 
