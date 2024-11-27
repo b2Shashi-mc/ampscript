@@ -20,8 +20,8 @@
     if @rowCount > 0 then
         for @index =1 to @rowCount do
             set @row=Row(@rows,@index)
-            set @{{column1}}= Field(@row,"{{column1}}")
-            set @{{column2}}= Field(@row,"{{column2}}")
+            set {{column1}}= Field(@row,{{column1}})
+            set {{column2}}= Field(@row,{{column2}})
         next @index
 
     endif
