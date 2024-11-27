@@ -1,0 +1,13 @@
+%%[
+    /* Declare variables */
+    var @dateColumn, @datelater
+
+    /* Replace with a valid date value or field reference */
+    set @dateColumn = {{datecolumn}} 
+
+    /* Add one day to the @dateColumn value */
+    set @datelater = DateAdd(@dateColumn, 1, 'D')
+
+    /* Output the new date value */
+    OutputLine(concat("New Date: ", v(@datelater)))
+]%%
