@@ -10,14 +10,15 @@
     set @Update1Column = {{column2}} /* The column to be updated */
     set @Update1Value = "UpdatedValue" /* The new value to update in @Update1Column */
 
-    /* Update data in the specified data extension */
-    /* The UpdateData function updates rows in the data extension
-     where the search criteria are matched */
-    set @isUpdated = UpdateData(@dataExtensionName, @noOfColumnsToSearch, 
-                                @search1Column, @search1Value, 
-                                @Update1Column, @Update1Value)
+    /* Use UpsertData to insert or update the row in the specified data extension */
+    /* The function will update rows where @search1Column matches @search1Value,
+       or insert a new row if no match is found */
+    set @isUpdated = UpsertData(@dataExtensionName, 
+                                 @noOfColumnsToSearch, 
+                                 @search1Column, @search1Value, 
+                                 @Update1Column, @Update1Value)
 
-    /* Output the result of the UpdateData function */
-    /* The function returns 1 for success and 0 for failure */
+    /* Output the result of the UpsertData function */
+    /* The function returns 1 for success (insert or update) and 0 for failure */
     Output(v(@isUpdated))
 ]%%

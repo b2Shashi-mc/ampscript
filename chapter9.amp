@@ -2,22 +2,22 @@
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"
 
-    /* Initialize variables for column values */
-    set @search1Column = {{column1}}
-    set @search1Value = ""
-    set @noOfColumntoSearch = 1
+    /* Initialize variables for search criteria and columns to be updated */
+    set @search1Column = {{column1}} /* The column used for searching rows to update */
+    set @search1Value = "SomeSearchValue" /* The value to search for in @search1Column */
+    set @noOfColumntoSearch = 1 /* Number of columns to search in the data extension */
 
-    set @Update1Column = {{column2}}
-    set @Update1Value = ""
+    set @Update1Column = {{column2}} /* The column to be updated */
+    set @Update1Value = "UpdatedValue" /* The new value to update in @Update1Column */
 
-    /* Insert data into the specified data extension */
-    /* InsertData function adds a new row to the data extension
-     with the specified column values */
-    set @isUpdated = UpdateDE(@dataExtensionName, @noOfColumntoSearch
+    /* Update data in the specified data extension */
+    /* The UpdateData function updates rows in the data extension 
+    where the search criteria are matched */
+    set @isUpdated = UpdateDE(@dataExtensionName, @noOfColumntoSearch, 
                                 @search1Column, @search1Value, 
-                                @Update1Column,@Update1Value)
+                                @Update1Column, @Update1Value)
 
-    /* Output the result of the InsertData function */
+    /* Output the result of the UpdateData function */
     /* The function returns 1 for success and 0 for failure */
     Output(v(@isUpdated))
 ]%%
