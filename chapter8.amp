@@ -1,0 +1,23 @@
+%%[
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
+
+    /* Initialize variables for column values */
+    set @search1Column = {{column1}}
+    set @search1Value = ""
+    set @noOfColumntoSearch = 1
+
+    set @Update1Column = {{column2}}
+    set @Update1Value = ""
+
+    /* Insert data into the specified data extension */
+    /* InsertData function adds a new row to the data extension
+     with the specified column values */
+    set @isUpdated = UpdateData(@dataExtensionName, @noOfColumntoSearch
+                                @search1Column, @search1Value, 
+                                @Update1Column,@Update1Value)
+
+    /* Output the result of the InsertData function */
+    /* The function returns 1 for success and 0 for failure */
+    Output(v(@isUpdated))
+]%%
