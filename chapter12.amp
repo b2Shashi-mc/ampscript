@@ -2,11 +2,22 @@
     /* Declare variables */
     var @dateColumn, @datelater
 
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
+
+    /* Set the attribute to search by in the data extension */
+    set @attributeToSearch = {{attributeToSearch}}
+
+    /* Set the value to search for in the given attribute */
+    set @valueToSearch = {{valueToSearch}}
+
     /* Replace with a valid date value or field reference */
     set @dateColumn = {{datecolumn}} 
 
     /* Add one day to the @dateColumn value */
     set @datelater = DateAdd(@dateColumn, 1, 'D')
+
+    set @dateValue=LookUp(@dataExtensionName,@dateColumn,@attributeToSearch, @valueToSearch)
 
     /* Output the new date value */
     OutputLine(concat("New Date: ", v(@datelater)))
