@@ -20,7 +20,8 @@
     set @numberOfRows = DataExtensionRowCount(@dataExtensionName)
 
     /* Use the LookupOrderedRows function to fetch rows ordered by the specified column and sorted in descending order */
-    set @rows = LookupOrderedRows(@dataExtensionName, @numberOfRows, concat(@sortColumn, " DESC"), @attributeToSearch, @valueToSearch)
+    set @rows = LookupOrderedRows(@dataExtensionName, @numberOfRows, 
+                                  concat(@sortColumn, " DESC"), @attributeToSearch, @valueToSearch)
 
     /* Get the total number of rows returned by the LookupOrderedRows function */
     set @rowCount = RowCount(@rows)
