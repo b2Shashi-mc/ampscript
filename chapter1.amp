@@ -1,36 +1,22 @@
 %%[
+    /* Declare variables */
+    var @response, @dataExtensionName, @attributeToFetch, @attributeToSearch, @valueToSearch
 
-/* Initialize the RetrieveRequest object to fetch Account details by CustomerKey */
-SET @accountRetrieveRequest = CreateObject("RetrieveRequest")
-SetObjectProperty(@accountRetrieveRequest, "ObjectType", "Account")
-AddObjectArrayItem(@accountRetrieveRequest, "Properties", "Address")
-AddObjectArrayItem(@accountRetrieveRequest, "Properties", "BusinessName")
-AddObjectArrayItem(@accountRetrieveRequest, "Properties", "City")
-AddObjectArrayItem(@accountRetrieveRequest, "Properties", "Country")
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
 
-/* Set up and configure the filter to locate the account using CustomerKey */
-SET @customerKeyFilter = CreateObject("SimpleFilterPart")
-SetObjectProperty(@customerKeyFilter, "Property", "CustomerKey")
-SetObjectProperty(@customerKeyFilter, "SimpleOperator", "equals")
-AddObjectArrayItem(@customerKeyFilter, "Value", "xxxxxxxx-5C32-4504-B8FF-xxxxxxxxxxxx") /* Replace with the target CustomerKey */
-SetObjectProperty(@accountRetrieveRequest, "Filter", @customerKeyFilter)
+    /* Set the attribute to fetch from the data extension*/
+    set @attributeToFetch = {{attributeToFetch}}
 
-/* Execute the RetrieveRequest to fetch account details */
-SET @accountResponse = InvokeRetrieve(@accountRetrieveRequest, @retrieveStatus, @retrieveRequestID)
+    /* Set the attribute to search by in the data extension */
+    set @attributeToSearch = {{attributeToSearch}}
 
-/* Loop through the retrieved account records */
-FOR @recordIndex = 1 TO RowCount(@accountResponse) DO
-   SET @accountRecord = Row(@accountResponse, @recordIndex)
-   SET @accountAddress = Field(@accountRecord, "Address")
-   SET @accountBusinessName = Field(@accountRecord, "BusinessName")
-   SET @accountCity = Field(@accountRecord, "City")
-   SET @accountCountry = Field(@accountRecord, "Country")
+    /* Set the value to search for in the given attribute */
+    set @valueToSearch = {{valueToSearch}}
 
-   /* Output the account details */
-   OutputLine(Concat("Address: ", @accountAddress))
-   OutputLine(Concat("BusinessName: ", @accountBusinessName))
-   OutputLine(Concat("City: ", @accountCity))
-   OutputLine(Concat("Country: ", @accountCountry))
-NEXT @recordIndex
+    /* Use the LookUp function to fetch the value of the specified attribute based on the search criteria */
+    set @response = LookUp(@dataExtensionName, @attributeToFetch, @attributeToSearch, @valueToSearch)
 
+    /* Output the fetched response value */
+    OutputLine(v(@response))
 ]%%
