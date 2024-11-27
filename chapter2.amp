@@ -1,0 +1,29 @@
+%%[
+    /* Declare variables */
+    var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch
+
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
+
+
+    /* Set the attribute to search by in the data extension */
+    set @attributeToSearch = {{attributeToSearch}}
+
+    /* Set the value to search for in the given attribute */
+    set @valueToSearch = {{valueToSearch}}
+
+    /* Use the LookUp function to fetch the value of the specified attribute based on the search criteria */
+    set @rows = LookupRows(@dataExtensionName, @attributeToSearch, @valueToSearch)
+
+    set @rowCount=RowCount(@rows)
+
+    if @rowCount > 0 then
+        for @index =1 to @rowCount do
+            set @row=Row(@rows,@index)
+            set @{{column1}}= Field(@row,"{{column1}}")
+            set @{{column2}}= Field(@row,"{{column2}}")
+        next @index
+
+    endif
+
+]%%
