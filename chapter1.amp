@@ -14,7 +14,8 @@
     /* Set the value to search for in the given attribute */
     set @valueToSearch = {{valueToSearch}}
 
-    /* Use the LookUp function to fetch the value of the specified attribute based on the search criteria */
+    /*  Use the LookUp function to fetch the value of 
+       the specified attribute based on the search criteria */
     set @response = LookUp(@dataExtensionName, @attributeToFetch, @attributeToSearch, @valueToSearch)
 
     /* Output the fetched response value */
