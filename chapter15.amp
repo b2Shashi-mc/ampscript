@@ -1,0 +1,22 @@
+%%[
+    /* Declare variables for the arithmetic operations */
+    var @addition, @substraction, @multiplication, @division, @reminder
+
+    /* Assign values to the numbers */
+    set @number1 = 2048
+    set @number2 = 5000
+
+    /* Perform arithmetic operations */
+    set @addition = Add(@number1, @number2)
+    set @substraction = Subtract(@number2, @number1)
+    set @multiplication = Multiply(@number1, @number2)
+    set @division = Divide(@number2, @number1)
+    set @reminder = Mod(@number2, @number1)
+
+    /* Output the results of the operations */
+    OutputLine(concat("Addition: ", v(@addition)))
+    OutputLine(concat("Subtraction: ", v(@substraction)))
+    OutputLine(concat("Multiplication: ", v(@multiplication)))
+    OutputLine(concat("Division: ", v(@division)))
+    OutputLine(concat("Reminder: ", v(@reminder)))
+]%%
