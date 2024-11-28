@@ -1,7 +1,7 @@
 %%[
     /* Declare variables */
     var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch, @rowCount, @index, @row
-    var @column1, @column2, @column3, @id
+    var @column1, @column2, @column3, @result
 
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"
@@ -29,11 +29,11 @@
             set @{{column2}} = Field(@row, "{{column2}}")
             set @{{column3}} = Field(@row, "{{column3}}")
             
-            /* Create Salesforce Lead record */
-            set @id = CreateSalesforceObject("Lead", 3,
-                                           "{{column1}}", @{{column1}},
-                                           "{{column2}}", @{{column2}},
-                                           "{{column3}}", @{{column3}})
+            /* Update Salesforce Lead record */
+            set @result = UpdateSingleSalesforceObject("Lead", @valueToSearch,
+                                                   "{{column1}}", @{{column1}},
+                                                   "{{column2}}", @{{column2}},
+                                                   "{{column3}}", @{{column3}})
         next @index
     endif
 ]%%
