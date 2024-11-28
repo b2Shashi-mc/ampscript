@@ -1,0 +1,33 @@
+
+
+%%[
+  /* Declare variables */
+  Var @Content, @ContentBlockName, @ProductName, @StatusCode
+  
+  /* Set the product name  */
+  Set @ProductName = "Product A"  /* This could be dynamically set */
+  
+  /* Based on the product, set the appropriate content block name */
+  If @ProductName == "Product A" Then
+    Set @ContentBlockName = "Product A Description"
+  ElseIf @ProductName == "Product B" Then
+    Set @ContentBlockName = "Product B Review"
+  Else
+    Set @ContentBlockName = "Generic Product Offer"
+  EndIf
+  
+  /* Retrieve the content from the selected content block */
+  Set @Content = ContentBlockByName(@ContentBlockName, 
+                                    "bodytext", false, 
+                                    "We're sorry, product information is unavailable.",
+                                     @StatusCode)
+  
+  /* Output the content */
+  Output(@Content)
+  
+  /* If content retrieval fails, display a fallback message */
+  If @StatusCode == -1 Then
+    Output(Concat('<p>For more details, please visit our 
+    <a href="https://www.example.com/products">Product Page</a>.</p>'))
+  EndIf
+]%%

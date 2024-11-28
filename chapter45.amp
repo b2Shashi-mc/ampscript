@@ -1,0 +1,39 @@
+
+%%[
+    /* Declare variables */
+    VAR @region, @ContentBlockKey, @Content, @StatusCode
+    /* Retrieve the region of the user (could be from a data extension or profile attribute) */
+    SET @region = AttributeValue("Region")
+    /* This could be 'USA', 'Europe', or 'Asia' */
+    /* Set the Content Block Key based on the user's region */
+    IF @region == "USA" THEN
+        SET @ContentBlockKey = "b1a44f65-5f26-4f76-b0c7-68a4e9a2260a"
+        /* USA content block */
+    ELSEIF @region == "Europe" THEN
+        SET @ContentBlockKey = "62c4ea47-05d9-4f2c-b056-9fd85a6194f0"
+        /* Europe content block */
+    ELSEIF @region == "Asia" THEN
+        SET @ContentBlockKey = "ae1a0ff9-eeb0-45b1-b4b2-06f3c4728c3b"
+        /* Asia content block */
+    ELSE
+        SET @ContentBlockKey = "e4ab128b-7dbb-4f45-bf34-7a75c6768b93"
+        /* Default content block */
+    ENDIF
+    /* Retrieve content from the content block based on the region */
+    SET @Content = ContentBlockByKey(
+        @ContentBlockKey,
+        "bodytext",
+        false,
+        "Sorry, we couldn't retrieve your promotional content.",
+        @StatusCode
+    )
+    /* Output the region-specific content */
+    Output(@Content)
+    /* If content retrieval fails, show a fallback message */
+    IF @StatusCode == -1 THEN
+        Output(Concat('<p>We encountered an issue retrieving the promotion.
+                     Please check back later or visit 
+                     <a href="https://www.example.com/support">our support page</a> 
+                     for more help.</p>'))
+    ENDIF
+]%%

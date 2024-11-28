@@ -1,0 +1,95 @@
+
+%%[
+  /* JSON Data containing flight information */
+  Set @json = '
+  {
+    "Flights": [
+      {
+        "Origin": "IND",
+        "Dest": "NYC",
+        "Price": 100.0,
+        "PerBagSurcharge": "N/A"
+      },
+      {
+        "Origin": "IND",
+        "Dest": "LAX",
+        "Price": 200.0,
+        "PerBagSurcharge": "Free"
+      },
+      {
+        "Origin": "IND",
+        "Dest": "SEA",
+        "Price": 500.0,
+        "PerBagSurcharge": 25
+      }
+    ]
+  }'
+
+  /* Parse JSON data into a rowset */
+  Set @rows = BuildRowsetFromJSON(@json, "$.['Flights'][*]", true)
+  
+  /* Set the locale for currency formatting */
+  Set @currency_locale = "en-US"
+  
+  /* Check if rows exist */
+  Set @rowcount = RowCount(@rows)
+  If @rowcount > 0 THEN
+]%%
+
+<!-- HTML Table Structure -->
+<table>
+  <tr>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Price</th>
+    <th>Per Bag Surcharge</th>
+  </tr>
+
+  %%[ 
+    /* Loop through the rows to display flight data */
+    For @row = 1 TO RowCount(@rows) do
+      Set @product = Row(@rows, @row)
+  ]%%
+
+  <tr>
+    %%[ 
+      /* Loop through columns 1 and 2 (Origin and Destination) */
+      For @col = 1 TO 2 do
+        Set @value = Field(@product, @col)
+    ]%%
+
+    <td>%%= v(@value) =%%</td>
+
+    %%[ next @col
+        /* Handle columns 3 and 4 (Price and Surcharge) */
+        For @col = 3 TO 4 do
+          Set @value = Field(@product, @col)
+          
+          /* Check if the value contains a number */
+          Set @pattern = "^[.]*[0-9].*[0-9]"
+          Set @match = RegExMatch(@value, @pattern, 0)
+          
+          /* If not a valid number, set to 0 */
+          If Empty(@match) then
+            Set @value = 0
+          EndIf
+          
+          /* Format the value as currency */
+          Set @value = FormatCurrency(@value, @currency_locale)
+        ]%%
+
+    <td>%%= v(@value) =%%</td>
+    %%[ next @col ]%%
+
+  </tr>
+  %%[ next @row ]%%
+
+</table>
+
+%%[ else ]%%
+
+<!-- Error message if no data found -->
+<h1>Well that’s embarrassing!</h1>
+<p>We weren’t able to find any pricing information. Check again later.</p>
+
+%%[ EndIf ]%%

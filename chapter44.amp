@@ -1,0 +1,39 @@
+
+%%[
+    /* Declare variables */
+    VAR @subscriptionTier, @ContentBlockId, @Content, @StatusCode
+    /* Retrieve the subscription tier from user data
+     (for example, from a Data Extension or Profile Attribute) */
+    SET @subscriptionTier = AttributeValue("SubscriptionTier")
+    /* Could be "Free", "Gold", or "Platinum" */
+    /* Set the ContentBlockId based on the subscription tier */
+    IF @subscriptionTier == "Free" THEN
+        SET @ContentBlockId = 12345
+        /* Replace with the actual ContentBlockId for the Free tier */
+    ELSEIF @subscriptionTier == "Gold" THEN
+        SET @ContentBlockId = 12346
+        /* Replace with the actual ContentBlockId for the Gold tier */
+    ELSEIF @subscriptionTier == "Platinum" THEN
+        SET @ContentBlockId = 12347
+        /* Replace with the actual ContentBlockId for the Platinum tier */
+    ELSE
+        SET @ContentBlockId = 12348
+        /* Default content if no valid tier is found */
+    ENDIF
+    /* Retrieve content from the corresponding content block */
+    SET @Content = ContentBlockById(
+        @ContentBlockId,
+        "bodytext",
+        false,
+        "Sorry, we couldn't retrieve your promotional content at the moment.",
+        @StatusCode
+    )
+    /* Output the retrieved content */
+    Output(@Content)
+    /* If content retrieval failed, show a fallback message */
+    IF @StatusCode == -1 THEN
+        Output(Concat('<p>There seems to be an issue with our content retrieval. 
+                        Please try again later or contact our 
+                        <a href="https://www.example.com/support">support team</a> for assistance.</p>'))
+    ENDIF
+]%%
