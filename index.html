@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMPscriptify</title>
+    <link rel="icon" href="icon.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="style.css">
+    <!-- Include CodeMirror styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.css">
+
+    <!-- Include CodeMirror theme styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/theme/eclipse.min.css">
+    <!-- You can include more themes as required -->
+
+    <!-- Include CodeMirror CSS for code editor styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/theme/dracula.min.css">
+</head>
+
+<body>
+    <header class="page-header">
+        <h1>AMPSCRIPTIFY</h1>
+        <button class="theme-toggle" id="toggleThemeButton">Toggle Theme</button>
+    </header>
+
+    <nav class="left-navigation">
+        <input type="text" id="chapterSearch" class="chapter-search" placeholder="Search Functions...">
+        <ul class="chapter-list">
+            <li><a class="nav-link" data-chapter="chapter1">LOOKUP</a></li>
+            <li><a class="nav-link" data-chapter="chapter2">LOOKUPROWS</a></li>
+            <li><a class="nav-link" data-chapter="chapter3">LOOKUPROWSCS</a></li>
+            <li><a class="nav-link" data-chapter="chapter4">LOOKUPORDEREDROWS</a></li>
+            <li><a class="nav-link" data-chapter="chapter5">LOOKUPORDEREDROWSCS</a></li>
+            <li><a class="nav-link" data-chapter="chapter6">INSERTDATA</a></li>
+            <li><a class="nav-link" data-chapter="chapter7">INSERTDE</a></li>
+            <li><a class="nav-link" data-chapter="chapter8">UPDATEDATA</a></li>
+            <li><a class="nav-link" data-chapter="chapter9">UPDATEDE</a></li>
+            <li><a class="nav-link" data-chapter="chapter10">UPSERTDATA</a></li>
+            <li><a class="nav-link" data-chapter="chapter11">UPSERTDE</a></li>
+            <li><a class="nav-link" data-chapter="chapter12">DATEADD</a></li>
+            <li><a class="nav-link" data-chapter="chapter13">DATEDIFF</a></li>
+            <li><a class="nav-link" data-chapter="chapter14">FORMATDATE</a></li>
+            <li><a class="nav-link" data-chapter="chapter15">MATH</a></li>
+            <li><a class="nav-link" data-chapter="chapter16">CREATESALESFORCEOBJECT</a></li>
+            <li><a class="nav-link" data-chapter="chapter17">UPDATESALESFORCEOBJECT</a></li>
+            <li><a class="nav-link" data-chapter="chapter18">ATTRIBUTEVALUE</a></li>
+            <li><a class="nav-link" data-chapter="chapter19">BASE64DECODE</a></li>
+            <li><a class="nav-link" data-chapter="chapter20">BASE64ENCODE</a></li>
+            <li><a class="nav-link" data-chapter="chapter21">DOMAIN</a></li>
+            <li><a class="nav-link" data-chapter="chapter22">ISEMAILADDRESS</a></li>
+            <li><a class="nav-link" data-chapter="chapter23">ISNULL</a></li>
+            <li><a class="nav-link" data-chapter="chapter24">OUTPUT</a></li>
+            <li><a class="nav-link" data-chapter="chapter25">OUTPUTLINE</a></li>
+            <li><a class="nav-link" data-chapter="chapter26">RANDOM</a></li>
+            <li><a class="nav-link" data-chapter="chapter27">CONCAT</a></li>
+            <li><a class="nav-link" data-chapter="chapter28">INDEXOF</a></li>
+            <li><a class="nav-link" data-chapter="chapter29">LENGTH</a></li>
+            <li><a class="nav-link" data-chapter="chapter30">LOWERCASE</a></li>
+            <li><a class="nav-link" data-chapter="chapter31">PROPERCASE</a></li>
+            <li><a class="nav-link" data-chapter="chapter32">REGEXMATCH</a></li>
+            <li><a class="nav-link" data-chapter="chapter33">REPLACELIST</a></li>
+            <li><a class="nav-link" data-chapter="chapter34">REPLACE</a></li>
+            <li><a class="nav-link" data-chapter="chapter35">SUBSTRING</a></li>
+            <li><a class="nav-link" data-chapter="chapter36">TRIM</a></li>
+            <li><a class="nav-link" data-chapter="chapter37">UPPERCASE</a></li>
+            <li><a class="nav-link" data-chapter="chapter38">ATTACHFILE</a></li>
+            <li><a class="nav-link" data-chapter="chapter39">BARCODEURL</a></li>
+            <li><a class="nav-link" data-chapter="chapter40">BUILDOPTIONLIST</a></li>
+            <li><a class="nav-link" data-chapter="chapter41">BUILDROWSETFROMSTRING</a></li>
+            <li><a class="nav-link" data-chapter="chapter42">BUILDROWSETFROMXML</a></li>
+            <li><a class="nav-link" data-chapter="chapter43">BUILDROWSETFROMJSON</a></li>
+            <li><a class="nav-link" data-chapter="chapter44">CONTENTBLOCKBYID</a></li>
+            <li><a class="nav-link" data-chapter="chapter45">CONTENTBLOCKBYKEY</a></li>
+            <li><a class="nav-link" data-chapter="chapter46">CONTENTBLOCKBYNAME</a></li>
+        </ul>
+        <div class="progress-indicator-container">
+            <div class="progress-indicator" id="progressIndicator"></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <!-- Chapter 1 with two rows -->
+        <section class="chapter">
+            <!-- Top Row: Table Generator -->
+            <div class="chapter-row">
+                <div class="table-panel">
+                    <h3>Create a Data Extension</h3>
+                    <form id="columnForm">
+                        <input type="number" id="numColumns" placeholder="Number of Columns" min="1" required>
+                        <button type="button" id="defineColumns">Define Columns</button>
+                    </form>
+                    <div id="columnContainer"></div>
+                    <button id="generateTableButton" style="display: none;">Generate Table</button>
+                    <div id="tableContainer"></div>
+                    <div id="editButtonContainer">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Code Editor -->
+            <div class="chapter-row">
+                <div class="code-panel">
+                    <h3>AMPscript Code Editor</h3>
+                    
+                    <textarea id="codeEditor" name="code" rows="10" cols="50">%%[
+
+/*Start your AMPscript*/
+
+
+
+]%%</textarea>
+                  <!-- Copy to Clipboard Button on the Right Side -->
+        <button id="copyButton" class="copy-btn icon-btn" onclick="copyCode()">
+            <i class="fa fa-clipboard"></i> <!-- FontAwesome clipboard icon -->
+        </button>  
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="copyModal" class="copy-modal">
+        <div class="modal-content">
+            Code copied to clipboard!
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2024 AMPscriptify. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/mode/javascript/javascript.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
