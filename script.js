@@ -405,6 +405,24 @@ document.getElementById('chapterSearch').addEventListener('input', function () {
         }
     });
 });
+
+// Show the popup modal when the page loads
+window.onload = function() {
+    document.getElementById('popupModal').style.display = 'block';
+    document.getElementById('numColumns').focus();
+};
+
+// Close the modal when the user clicks the close button
+document.getElementById('closeModal').onclick = function() {
+    document.getElementById('popupModal').style.display = 'none';
+};
+
+// You can also close the modal when the user clicks the "Define Columns" button
+document.getElementById('defineColumnsBtn').onclick = function() {
+    document.getElementById('popupModal').style.display = 'none';
+    // Add any additional logic here to show the column input area if necessary
+};
+
 document.addEventListener('contextmenu', function (event) {
     event.preventDefault();
 }, false);

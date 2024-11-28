@@ -404,3 +404,93 @@ button:disabled {
 .icon-btn:hover {
     opacity: 0.8;
 }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .left-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-top: 80px; /* Added for top spacing */
+        padding: 20px;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-top: 80px;
+        padding: 20px;
+    }
+
+    .nav-link {
+        font-size: 12px; /* Adjusted font size for smaller screens */
+    }
+
+    .chapter {
+        padding: 15px;
+    }
+}
+
+/* Modal styles */
+.popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 80%;
+    max-width: 400px;
+    z-index: 1001; /* Ensure it's above other content */
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.popup-content h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #333;
+}
+
+.popup-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.popup-content button {
+    background-color: #388E3C;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.popup-content button:hover {
+    background-color: #2e7d32;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 25px;
+    color: #333;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
