@@ -1,0 +1,12 @@
+
+%%[
+    /* Fetch the customer's unique order ID */
+    VAR @orderId
+    SET @orderId = AttributeValue("OrderID")
+    /* Generate the barcode for the order ID */
+    SET @barcodeURL = BarcodeURL(@orderId, "code128auto", 200, 50)
+]%%
+<p>Thank you for your order!</p>
+<p>Your unique order ID is: %%=v(@orderId)=%%</p>
+<p>Below is your order ID in barcode form for easy reference:</p>
+<img src="%%=v(@barcodeURL)=%%" alt="Order ID Barcode" />

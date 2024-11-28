@@ -1,0 +1,25 @@
+
+%%[
+    /* Fetch the previously viewed category from the customer's profile */
+    VAR @preferredCategory
+    SET @preferredCategory = AttributeValue("PreferredCategory")
+    /* Build the options for the dropdown list,
+     with the previously viewed category pre-selected */
+    SET @CategoryOptions = BuildOptionList(
+        @preferredCategory,
+        "1",
+        "Electronics",
+        "2",
+        "Clothing",
+        "3",
+        "Home Appliances"
+    )
+]%%
+<p>
+    We'd love to know your preferences! Please select your preferred product
+    category:
+</p>
+
+<select name="productCategory">
+    %%=v(@CategoryOptions)=%%
+</select>

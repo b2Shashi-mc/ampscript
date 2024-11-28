@@ -1,0 +1,7 @@
+
+%%=AttachFile('HTTP', 'http://example.com/catalog.pdf', 'newFileName.pdf')=%%
+
+<p>Dear Customer,</p>
+<p>Thank you for subscribing to our newsletter. 
+    We have attached our latest product catalog for your reference.</p>
+<p>You can find the catalog attached to this email.</p>

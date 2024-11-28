@@ -1,0 +1,53 @@
+
+%%[
+  /* Set the XML source with product data */
+  Set @productsXml = "<products>
+    <product>
+      <name>Smartphone</name>
+      <description>Latest model with amazing features</description>
+      <price>299.99</price>
+      <availability>In Stock</availability>
+    </product>
+    <product>
+      <name>Laptop</name>
+      <description>Powerful laptop with long battery life</description>
+      <price>799.99</price>
+      <availability>Out of Stock</availability>
+    </product>
+    <product>
+      <name>Headphones</name>
+      <description>Noise-canceling over-ear headphones</description>
+      <price>149.99</price>
+      <availability>In Stock</availability>
+    </product>
+  </products>"
+
+  /* Parse the XML and build a rowset of products */
+  Set @productRowset = BuildRowsetFromXml(@productsXml, "//product", 1)
+
+  /* Loop through each product in the rowset */
+  Set @rowCount = RowCount(@productRowset)
+]%%
+
+<p>Check out these amazing products available in our store:</p>
+
+%%[ 
+  For @i = 1 to @rowCount do
+    Set @product = Row(@productRowset, @i)
+    Set @name = Field(@product, "name")
+    Set @description = Field(@product, "description")
+    Set @price = Field(@product, "price")
+    Set @availability = Field(@product, "availability")
+]%%
+
+<p><strong>Product: %%=v(@name)=%%</strong></p>
+<p>Description: %%=v(@description)=%%</p>
+<p>Price: $%%=v(@price)=%%</p>
+<p>Availability: %%=v(@availability)=%%</p>
+<hr>
+
+%%[ 
+  Next @i 
+]%%
+
+<p>Visit our store to order today!</p>

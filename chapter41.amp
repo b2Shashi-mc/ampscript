@@ -1,0 +1,18 @@
+
+%%[
+    /* Set the string of discount codes and the delimiter */
+    SET @discountCodes = "CODE123|SAVE456|DISCOUNT789"
+    SET @delimiter = "|"
+    /* Split the discount codes into a rowset */
+    SET @rowset = BuildRowsetFromString(@discountCodes, @delimiter)
+    /* Begin looping through each row in the rowset */
+    SET @codeCount = RowCount(@rowset)
+]%%
+<p>Thank you for being a valued customer! Here are your discount codes:</p>
+%%[
+    FOR @i = 1 TO @codeCount DO
+        SET @discountCode = Field(Row(@rowset, @i), 1)
+]%%
+<p>Discount Code: %%=v(@discountCode)=%%</p>
+%%[ NEXT @A0 @i  ]%%
+<p>Use these codes at checkout to save on your next purchase!</p>
