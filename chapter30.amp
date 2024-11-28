@@ -1,0 +1,7 @@
+
+%%[
+    VAR @email, @normalizedEmail
+    SET @email = "User@Example.com"
+    SET @normalizedEmail = Lowercase(@email)
+]%%
+<p>Your email: %%=v(@normalizedEmail)=%%</p>

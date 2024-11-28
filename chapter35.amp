@@ -1,0 +1,10 @@
+
+%%[
+    /* Define the membership ID that contains the rewards tier */
+    VAR @membershipID, @rewardsTier
+    /* Example membership ID format */
+    SET @membershipID = "0312F-Gold"
+    /* Extract the rewards tier using the Substring function */
+    SET @rewardsTier = Substring(@membershipID, 7)
+]%%
+<p>Thank you for being a %%=v(@rewardsTier)=%% rewards member!</p>

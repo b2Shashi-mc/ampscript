@@ -1,0 +1,16 @@
+
+%%[
+    VAR @email, @domain, @isPremiumDomain
+    SET @email = "user@premiumdomain.com"
+    SET @domain = Substring(@email, IndexOf(@email, "@") + 1, Length(@email))
+    /* List of premium domains */
+    SET @isPremiumDomain = IIf(Or(@domain == "premiumdomain.com", @domain == "anotherpremium.com"), True, False)
+    IF @isPremiumDomain THEN
+]%%
+<p>
+    Thank you for using one of our premium email domains! Enjoy exclusive
+    benefits.
+</p>
+    %%[ Else ]%%
+<p>Thank you for being a valued customer!</p>
+    %%[ EndIf ]%%

@@ -1,0 +1,14 @@
+
+%%[
+    VAR @username, @usernameLength
+    SET @username = "Kjell"
+    SET @usernameLength = Length(@username)
+    IF @usernameLength >= 6 THEN
+]%%
+<p>Welcome, %%=v(@username)=%%! Your username is valid.</p>
+    %%[ Else ]%%
+<p>
+    Your username is too short. Please choose a username with at least 6
+    characters.
+</p>
+    %%[ EndIf ]%%

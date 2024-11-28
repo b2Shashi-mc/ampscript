@@ -1,0 +1,9 @@
+
+%%[
+    /* Define the product name */
+    VAR @productName
+    SET @productName = "super stylish headphones"
+    /* Convert the product name to uppercase */
+]%%
+<p>Introducing our latest product: %%=Uppercase(@productName)=%%!</p>
+<p>Get yours today and experience the best sound quality!</p>

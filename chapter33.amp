@@ -1,0 +1,13 @@
+
+%%[
+  Var @emailList, @cleanedEmailList
+  Set @emailList = "john@example.com; jane@example.com, mark@example.com  lucy@example.com"
+  
+  /* Replace semicolons, spaces, and commas with a single comma */
+  Set @cleanedEmailList = ReplaceList(@emailList,
+                                      ";", ",",  /* Replace semicolons with commas */
+                                      " ", ",",  /* Replace spaces with commas */
+                                      ",", ",")  /* Ensure commas stay as commas */
+]%%
+
+<p>Cleaned email list: %%=v(@cleanedEmailList)=%%</p>

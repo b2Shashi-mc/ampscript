@@ -1,0 +1,13 @@
+
+%%[
+  Var @sourceText, @currentSeason, @promoText
+  Set @sourceText = "Special winter offers just for you!"
+  
+  /* Define the current season */
+  Set @currentSeason = "spring"
+  
+  /* Replace 'winter' with the current season */
+  Set @promoText = Replace(@sourceText, "winter", @currentSeason)
+]%%
+
+<p>%%=v(@promoText)=%%</p>

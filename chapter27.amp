@@ -1,0 +1,10 @@
+
+%%[
+    VAR @firstName, @middleName, @lastName, @fullName
+    SET @firstName = AttributeValue("FirstName")
+    SET @middleName = AttributeValue("MiddleName")
+    SET @lastName = AttributeValue("LastName")
+    SET @fullName = Concat(@firstName," ",@middleName," ",@lastName)
+]%%
+<p>Hello %%=v(@fullName)=%%,</p>
+<p>Welcome to our service!</p>

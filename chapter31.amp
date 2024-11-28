@@ -1,0 +1,9 @@
+
+%%[
+    VAR @firstName, @lastName, @formattedName
+    SET @firstName = "john"
+    SET @lastName = "doe"
+    SET @formattedName = Concat(@firstName, " ", @lastName)
+    SET @formattedNameProper = ProperCase(@formattedName)
+]%%
+<p>Formatted name: %%=v(@formattedNameProper)=%%</p>

@@ -1,0 +1,14 @@
+
+%%[
+    VAR @email, @isValidEmail
+    SET @email = "user@example.com"
+    /* Regular expression pattern to match a basic email format */
+    SET @emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    /* Match the email against the pattern */
+    SET @isValidEmail = RegExMatch(@email, @emailPattern, 0)
+    IF @isValidEmail == "true" THEN
+]%%
+<p>Your email is valid!</p>
+    %%[ Else ]%%
+<p>Your email is not valid. Please provide a valid email address.</p>
+    %%[ EndIf ]%%

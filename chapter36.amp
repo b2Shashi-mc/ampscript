@@ -1,0 +1,11 @@
+
+%%[
+    /* Define the customer's name with extra spaces and inconsistent case */
+    VAR @fullName, @cleanedName
+    SET @fullName = "     john doe     "
+    /* Trim the leading and trailing spaces */
+    SET @cleanedName = Trim(@fullName)
+    /* Capitalize the first letter of each word in the name */
+    SET @cleanedName = ProperCase(@cleanedName)
+]%%
+<p>Your cleaned and formatted name is: %%=v(@cleanedName)=%%</p>
