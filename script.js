@@ -415,11 +415,13 @@ window.onload = function() {
 // Close the modal when the user clicks the close button
 document.getElementById('closeModal').onclick = function() {
     document.getElementById('popupModal').style.display = 'none';
+    document.getElementById('numColumns').focus();
 };
 
 // You can also close the modal when the user clicks the "Define Columns" button
 document.getElementById('defineColumnsBtn').onclick = function() {
     document.getElementById('popupModal').style.display = 'none';
+    document.getElementById('numColumns').focus();
     // Add any additional logic here to show the column input area if necessary
 };
 
