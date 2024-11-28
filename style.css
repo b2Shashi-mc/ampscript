@@ -233,6 +233,14 @@ button:disabled {
     background-color: #444;
 }
 
+.dark-theme .popup-content {
+    background-color: #444;
+}
+
+.dark-theme .h2 {
+    background-color: #f6f4f4;
+}
+
 /* Active Link Styling */
 .nav-link.active {
     background-color: #388E3C;
