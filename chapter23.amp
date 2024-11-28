@@ -1,0 +1,5 @@
+%%[ 
+  Var @n 
+  Set @n = "Hello"
+]%%
+<p> %%= IsNull(@n) =%%</p>

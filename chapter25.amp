@@ -1,0 +1,13 @@
+
+%%[
+    VAR @productName, @quantity, @price, @totalPrice
+    SET @productName = "Wireless Headphones"
+    SET @quantity = 2
+    SET @price = 99.99
+    SET @totalPrice = @quantity * @price
+    /* Output the order details */
+    OutputLine(Concat("Product: ", @productName))
+    OutputLine(Concat("Quantity: ", @quantity))
+    OutputLine(Concat("Price per item: $", Format(@price, "0.00")))
+    OutputLine(Concat("Total price: $", Format(@totalPrice, "0.00")))
+]%%

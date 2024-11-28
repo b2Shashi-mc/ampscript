@@ -1,0 +1,8 @@
+%%[ 
+  Var @hello, @another_line
+  Set @hello = "Hello, "
+  Set @another_line = "This is another line of text."
+  Output(Concat(@hello, "world!"))
+  Output("<br>")
+  Output(v(@another_line))
+]%%

@@ -1,0 +1,6 @@
+
+%%[
+    VAR @orderID
+    SET @orderID = Random(10000, 99999)
+]%%
+<p>Your order ID is: %%=v(@orderID)=%%</p>
