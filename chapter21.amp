@@ -1,0 +1,12 @@
+
+%%[
+    VAR @email, @emailDomain, @customMessage
+    SET @email = "sales@example.com"
+    SET @emailDomain = Domain(@email)
+    IF @emailDomain == "example.com" THEN
+        SET @customMessage = "Welcome back, Example Corp team!"
+    ELSE
+        SET @customMessage = "Hello there! Explore our exclusive offers today."
+    ENDIF
+]%%
+<p>%%=v(@customMessage)=%%</p>

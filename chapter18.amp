@@ -1,0 +1,25 @@
+
+%%[
+    VAR @spending, @discountMessage
+    SET @spending = AttributeValue("TotalSpending")
+    /* Check if TotalSpending exists */
+    IF empty(@spending) THEN
+        /* Encourage the user to start shopping */
+        SET @discountMessage = "It looks like you haven’t shopped with us yet. 
+                <a href='https://example.com/shop'>Start shopping today</a> and unlock amazing deals!"
+    ELSEIF @spending > 500 THEN
+        /* High spender, premium discount */
+        SET @discountMessage = Concat("💎 Wow! You’ve spent $", FormatNumber(@spending, "N2"),
+                         " with us. Enjoy an exclusive 20% discount on your next purchase with code *VIP20*!")
+    ELSEIF @spending > 100 THEN
+        /* Mid-level spender, moderate discount */
+        SET @discountMessage = Concat("👏 Great job! You’ve spent $", FormatNumber(@spending, "N2"),
+                         " so far. Use code *THANKYOU15* to save 15% on your next order.")
+    ELSE
+        /* Lower spending, small incentive */
+        SET @discountMessage = Concat("You’re off to a great start with $", FormatNumber(@spending, "N2"), 
+                        " in spending! Here’s a 10% discount to keep you going: use code *WELCOME10* at checkout.")
+    ENDIF
+]%%
+<!-- Display the dynamic discount message -->
+<p>%%= v(@discountMessage) =%%</p>

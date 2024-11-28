@@ -1,0 +1,10 @@
+
+%%[
+    VAR @secretMessage, @secretMessageB64
+    /* Base64 encoded secret message */
+    SET @secretMessageB64 = "U3VycHJpc2UhIFRoZXJlJ3MgYSBncmVhdCBnaWZ0IHdhaXRpbmcgZm9yIHlvdQ=="
+    /* Decode the Base64 string */
+    SET @secretMessage = Base64Decode(@secretMessageB64)
+]%%
+<!-- Display the secret message -->
+<p>🎁 <strong>Surprise Message:</strong> %%=v(@secretMessage)=%%</p>

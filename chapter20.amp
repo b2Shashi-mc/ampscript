@@ -1,0 +1,10 @@
+
+%%[
+    VAR @ticketID, @ticketIDB64
+    /* The plain text unique ticket ID */
+    SET @ticketID = "TICKET12345"
+    /* Encode the ticket ID to Base64 */
+    SET @ticketIDB64 = Base64Encode(@ticketID)
+]%%
+<p>Your encoded event ticket ID: <strong>%%=v(@ticketIDB64)=%%</strong></p>
+<p>🔒 Keep this secure! Use it to unlock event details later.</p>

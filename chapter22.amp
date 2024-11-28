@@ -1,0 +1,14 @@
+
+%%[
+    VAR @email1, @email2, @email3
+    SET @email1 = "user@example.com"
+    SET @email2 = "invalid-email"
+    SET @email3 = ""
+    /* Check each email with IsEmailAddress() */
+    SET @result1 = IsEmailAddress(@email1)
+    SET @result2 = IsEmailAddress(@email2)
+    SET @result3 = IsEmailAddress(@email3)
+]%%
+<p>@email1: %%=v(@email1)=%% is valid: %%=v(@result1)=%%</p>
+<p>@email2: %%=v(@email2)=%% is valid: %%=v(@result2)=%%</p>
+<p>@email3: %%=v(@email3)=%% is valid: %%=v(@result3)=%%</p>
