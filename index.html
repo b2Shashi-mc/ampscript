@@ -28,9 +28,10 @@
     </header>
 
     <nav class="left-navigation">
+        <h3>AMPSCRIPT Functions</h3>
         <input type="text" id="chapterSearch" class="chapter-search" placeholder="Search Functions...">
         <ul class="chapter-list">
-            <li><a class="nav-link" data-chapter="chapter1">LOOKUP</a></li>
+            <li><a class="nav-link active" data-chapter="chapter1">LOOKUP</a></li>
             <li><a class="nav-link" data-chapter="chapter2">LOOKUPROWS</a></li>
             <li><a class="nav-link" data-chapter="chapter3">LOOKUPROWSCS</a></li>
             <li><a class="nav-link" data-chapter="chapter4">LOOKUPORDEREDROWS</a></li>
@@ -88,7 +89,7 @@
             <!-- Top Row: Table Generator -->
             <div class="chapter-row">
                 <div class="table-panel">
-                    <h3>Create a Data Extension</h3>
+                    <h3>Data Extension</h3>
                     <form id="columnForm">
                         <input type="number" id="numColumns" placeholder="Number of Attributes" min="1" required>
                         <button type="button" id="defineColumns">Define Attributes</button>
@@ -105,9 +106,9 @@
             <!-- Bottom Row: Code Editor -->
             <div class="chapter-row">
                 <div class="code-panel">
-                    <h3>AMPscript Code Editor</h3>
+                    <h3>AMPscript Code Editor:</h3>
 
-                    <textarea id="codeEditor" name="code" rows="10" cols="50">%%[
+                    <textarea id="codeEditor" name="code" rows="30" cols="50">%%[
 
 /*Start your AMPscript*/
 

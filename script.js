@@ -121,9 +121,9 @@ function replacePlaceholders(content, chapterName) {
             content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
             break;
 
-            case 'chapter12':
-            case 'chapter13':
-            case 'chapter14':
+        case 'chapter12':
+        case 'chapter13':
+        case 'chapter14':
             // Chapter 12,13 specific replacements
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{valueToSearch}}/g, columns[2] ? `"${columns[2].name}"` : '""');
@@ -289,6 +289,8 @@ document.getElementById("generateTableButton").addEventListener("click", functio
     document.getElementById("columnContainer").style.display = "none";
     document.getElementById("numColumns").style.display = "none";
 
+    
+
     const editButtonContainer = document.getElementById("editButtonContainer");
     editButtonContainer.innerHTML = "";
 
@@ -340,6 +342,8 @@ document.getElementById("generateTableButton").addEventListener("click", functio
     });
 
     isTableGenerated = true;
+    // Re-fetch and update the content in the editor with new column values
+    loadChapterContent('chapter1');
 });
 // Function to update progress indicator
 function updateProgress() {
@@ -407,19 +411,19 @@ document.getElementById('chapterSearch').addEventListener('input', function () {
 });
 
 // Show the popup modal when the page loads
-window.onload = function() {
+window.onload = function () {
     document.getElementById('popupModal').style.display = 'block';
     document.getElementById('numColumns').focus();
 };
 
 // Close the modal when the user clicks the close button
-document.getElementById('closeModal').onclick = function() {
+document.getElementById('closeModal').onclick = function () {
     document.getElementById('popupModal').style.display = 'none';
     document.getElementById('numColumns').focus();
 };
 
 // You can also close the modal when the user clicks the "Define Columns" button
-document.getElementById('defineColumnsBtn').onclick = function() {
+document.getElementById('defineColumnsBtn').onclick = function () {
     document.getElementById('popupModal').style.display = 'none';
     document.getElementById('numColumns').focus();
     // Add any additional logic here to show the column input area if necessary
