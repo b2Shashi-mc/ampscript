@@ -1,6 +1,8 @@
 // Flag to track if the table is generated
 let isTableGenerated = false;
 let columns = [];  // Store the table column data
+// Select all links with the class 'nav-link'
+const navLinks = document.querySelectorAll('.nav-link');
 
 // CodeMirror initialization for the code editor
 const editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
@@ -40,8 +42,26 @@ function loadChapterContent(chapterName) {
         });
 }
 
+function generateColumnAssignments(columns = []) {
+    let columnAssignments = '';
+    let outputLineColumns = '';
+
+    for (let i = 0; i < columns.length; i++) {
+        if (columns[i]) {
+            columnAssignments += `set @${columns[i].name} = Field(@row, "${columns[i].name}")\n\t\t\t`;
+            
+        }
+    }
+    outputLineColumns += `" ${columns[0].name}: ", @${columns[0].name}`;
+    return { columnAssignments, outputLineColumns };
+}
+
+
 // Function to replace placeholders with actual column data based on chapter
 function replacePlaceholders(content, chapterName) {
+
+    
+
     // Dynamic replacement logic based on chapter
     switch (chapterName) {
         case 'chapter1':
@@ -52,93 +72,39 @@ function replacePlaceholders(content, chapterName) {
             break;
 
         case 'chapter2':
+        case 'chapter3':
             // Replace specific placeholders like {{attributeToSearch}} and {{valueToSearch}}
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
 
-            // Build dynamic column assignments
-            let columnAssignments = '';
-            let outputLineColumns = ''; // For debugging output, only include columns that are used
+            // Use the helper function to generate dynamic column assignments
+            const { columnAssignments, outputLineColumns } = generateColumnAssignments(columns);
 
-            // Loop through all the columns and add corresponding AMPscript lines only for available columns
-            for (let i = 0; i < columns.length; i++) {
-                if (columns[i]) {
-                    // Dynamically generate the set statement for each column
-                    columnAssignments += `set @${columns[i].name} = Field(@row, "${columns[i].name}")\n\t\t\t`;
-
-                    
-                }
-            }
-
-            // Optionally add these columns to output for debugging purposes
-            outputLineColumns += `" ${columns[0].name}: ", @${columns[0].name}`;
-
-            // Replace the placeholder in the content with the dynamic column assignments
             content = content.replace(/{{columnAssignments}}/g, columnAssignments);
-
-            // Replace the placeholder for outputLine with dynamic columns
             content = content.replace(/{{outputLineColumns}}/g, outputLineColumns);
-
-            break;
-
-        case 'chapter3':
-            // Chapter 3 specific replacements
-            content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
-            content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
             break;
 
         case 'chapter4':
+        case 'chapter5':
             // Chapter 4 specific replacements
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{attributeToSort}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
-            content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
-            break;
 
-        case 'chapter5':
-            // Chapter 5 specific replacements
-            content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{attributeToSort}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
-            content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
+            // Use the helper function to generate dynamic column assignments
+            const { columnAssignments: chapter4ColumnAssignments, outputLineColumns: chapter4OutputLineColumns } = generateColumnAssignments(columns);
+
+            content = content.replace(/{{columnAssignments}}/g, chapter4ColumnAssignments);
+            content = content.replace(/{{outputLineColumns}}/g, chapter4OutputLineColumns);
             break;
 
         case 'chapter6':
-            // Chapter 6 specific replacements
-            content = content.replace(/{{column1}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
-            break;
-
         case 'chapter7':
-            // Chapter 7 specific replacements
-            content = content.replace(/{{column1}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
-            break;
-
         case 'chapter8':
-            // Chapter 8 specific replacements
-            content = content.replace(/{{column1}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
-            break;
-
         case 'chapter9':
-            // Chapter 9 specific replacements
-            content = content.replace(/{{column1}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
-            break;
-
         case 'chapter10':
-            // Chapter 10 specific replacements
-            content = content.replace(/{{column1}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
-            break;
-
         case 'chapter11':
-            // Chapter 11 specific replacements
+            // Chapter 6 specific replacements
             content = content.replace(/{{column1}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
             break;
@@ -210,7 +176,7 @@ document.getElementById("defineColumns").addEventListener("click", function () {
         showPopupMessage("Please define at least 3 columns.");
         return;
     }
-   
+
     columnContainer.innerHTML = ''; // Clear previous input fields
 
     columns = [];  // Reset columns array
@@ -344,6 +310,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
             editButton.innerText = "Edit"; // Change button text back to "Edit"
             // Re-fetch and update the content in the editor with new column values
             loadChapterContent('chapter1');
+            setActiveChapterLink('chapter1'); // Ensure the active chapter is updated
         } else {
             // Enable editing in the table cells
             for (let i = 1; i < tableRows.length; i++) {
@@ -491,5 +458,17 @@ window.addEventListener('click', function (event) {
         modal.setAttribute('aria-hidden', 'true');
     }
 });
+// Function to set the active chapter link
+function setActiveChapterLink(chapterName) {
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active'); // Remove 'active' from all links
+    });
+
+    const activeLink = document.querySelector(`.nav-link[data-chapter="${chapterName}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active'); // Add 'active' class to the clicked link
+    }
+}
+
 
 
