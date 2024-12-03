@@ -1,6 +1,7 @@
 %%[
     /* Declare variables */
     var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch, @rowCount, @index, @row
+    var @column1, @column2
 
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"
