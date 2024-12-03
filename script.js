@@ -16,7 +16,7 @@ const editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
 function loadChapterContent(chapterName) {
     // Validate if the table is generated before loading content
     if (!isTableGenerated) {
-        alert("Please generate the table before fetching chapter content.");
+        showPopupMessage("Please generate the table before fetching chapter content.");
         return;
     }
 
@@ -36,7 +36,7 @@ function loadChapterContent(chapterName) {
         })
         .catch(error => {
             console.error('Error fetching chapter:', error);
-            alert('Failed to load chapter content');
+            showPopupMessage('Failed to load chapter content');
         });
 }
 
@@ -52,11 +52,31 @@ function replacePlaceholders(content, chapterName) {
             break;
 
         case 'chapter2':
-            // Chapter 2 specific replacements
+            // Replace specific placeholders like {{attributeToSearch}} and {{valueToSearch}}
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
-            content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
+            content = content.replace(/{{valueToSearch}}/g, columns[2] ? `"${columns[2].name}"` : '""');
+
+            // Build dynamic column assignments
+            let columnAssignments = '';
+            let outputLineColumns = ''; // For debugging output, only include columns that are used
+
+            // Loop through all the columns and add corresponding AMPscript lines only for available columns
+            for (let i = 0; i < columns.length; i++) {
+                if (columns[i]) {
+                    // Dynamically generate the set statement for each column
+                    columnAssignments += `set @${columns[i].name} = Field(@row, "${columns[i].name}")\n\t\t\t`;
+
+                    // Optionally add these columns to output for debugging purposes
+                    outputLineColumns += `" ${columns[i].name}: ", @${columns[i].name}`;
+                }
+            }
+
+            // Replace the placeholder in the content with the dynamic column assignments
+            content = content.replace(/{{columnAssignments}}/g, columnAssignments);
+
+            // Replace the placeholder for outputLine with dynamic columns
+            content = content.replace(/{{outputLineColumns}}/g, outputLineColumns);
+
             break;
 
         case 'chapter3':
@@ -184,11 +204,11 @@ document.getElementById("defineColumns").addEventListener("click", function () {
     const numColumns = document.getElementById("numColumns").value;
     const columnContainer = document.getElementById("columnContainer");
 
-    if (numColumns <= 0) {
-        alert("Please enter a valid number of columns.");
+    if (numColumns < 3) {
+        showPopupMessage("Please define at least 3 columns.");
         return;
     }
-
+   
     columnContainer.innerHTML = ''; // Clear previous input fields
 
     columns = [];  // Reset columns array
@@ -246,7 +266,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
 
         if (colType === "Text") {
             if (!colName || !colType || !colLength) {
-                alert(`Please fill in all details for Column ${i + 1}`);
+                showPopupMessage(`Please fill in all details for Column ${i + 1}`);
                 return;
             }
         }
@@ -289,7 +309,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
     document.getElementById("columnContainer").style.display = "none";
     document.getElementById("numColumns").style.display = "none";
 
-    
+
 
     const editButtonContainer = document.getElementById("editButtonContainer");
     editButtonContainer.innerHTML = "";
@@ -429,6 +449,12 @@ document.getElementById('defineColumnsBtn').onclick = function () {
     // Add any additional logic here to show the column input area if necessary
 };
 
+document.getElementById('instructionsbtn').onclick = function () {
+    document.getElementById('messageModal').style.display = 'none';
+    //document.getElementById('numColumns').focus();
+    // Add any additional logic here to show the column input area if necessary
+};
+
 document.addEventListener('contextmenu', function (event) {
     event.preventDefault();
 }, false);
@@ -438,3 +464,30 @@ document.addEventListener('keydown', function (event) {
         event.preventDefault();
     }
 });
+
+// Show the popup with a custom message
+function showPopupMessage(message) {
+    const modal = document.getElementById('messageModal');
+    const modalContent = document.getElementById('popupMessageContent');
+    modalContent.textContent = message;
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+// Close the modal when the close button is clicked
+document.getElementById('closeMessageModal').addEventListener('click', function () {
+    const modal = document.getElementById('messageModal');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+});
+
+// Close the modal if user clicks outside of the modal content
+window.addEventListener('click', function (event) {
+    const modal = document.getElementById('messageModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    }
+});
+
+

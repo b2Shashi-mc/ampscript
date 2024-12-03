@@ -143,20 +143,19 @@
             <span class="close-btn" id="closeModal">&times;</span>
             <h2>Instructions</h2>
             <p>Please enter the number of attributes you'd like to define and click on the <strong>"Define
-                Attributes"</strong> button.</p>
-            <button id="defineColumnsBtn">Define Attributes</button>
-        </div>
-    </div>
-    <div class="popup-modal" id="popupModal2">
-        <div class="popup-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-            <h2>Instructions</h2>
-            <p>Please enter the number of attributes you'd like to define and click on the <strong>"Define
                     Attributes"</strong> button.</p>
             <button id="defineColumnsBtn">Define Attributes</button>
         </div>
     </div>
-
+    <!-- Modal for displaying messages -->
+    <div class="popup-modal" id="messageModal" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="popup-content">
+            <span class="close-btn" id="closeMessageModal" aria-label="Close message modal">&times;</span>
+            <h2 id="messageModalLabel">Instructions</h2>
+            <p id="popupMessageContent">This is a sample message.</p>
+            <button id="instructionsbtn">Understood</button>
+        </div>
+    </div>
     <!-- Footer Section -->
     <footer class="footer">
         <p>&copy; 2024 Shashi Prasad. All Rights Reserved.</p>
