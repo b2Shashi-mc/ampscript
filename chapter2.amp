@@ -27,6 +27,14 @@
             /* Fetch values for the specified columns and assign them to variables */
             set @{{column1}} = Field(@row, "{{column1}}")
             set @{{column2}} = Field(@row, "{{column2}}")
+            set @{{column3}} = Field(@row, "{{column3}}")
+            set @{{column4}} = Field(@row, "{{column4}}")
+            set @{{column5}} = Field(@row, "{{column5}}")
+            set @{{column6}} = Field(@row, "{{column6}}")
+            set @{{column7}} = Field(@row, "{{column7}}")
+            set @{{column8}} = Field(@row, "{{column8}}")
+            set @{{column9}} = Field(@row, "{{column9}}")
+            set @{{column10}} = Field(@row, "{{column10}}")
             
             /* Optionally: you can output these values for debugging or further use */
             OutputLine(concat("{{column1}}: ", @{{column1}}, " {{column2}}: ", @{{column2}}))
