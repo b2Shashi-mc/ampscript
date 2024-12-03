@@ -54,7 +54,7 @@ function replacePlaceholders(content, chapterName) {
         case 'chapter2':
             // Replace specific placeholders like {{attributeToSearch}} and {{valueToSearch}}
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{valueToSearch}}/g, columns[2] ? `"${columns[2].name}"` : '""');
+            content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
 
             // Build dynamic column assignments
             let columnAssignments = '';
@@ -66,10 +66,12 @@ function replacePlaceholders(content, chapterName) {
                     // Dynamically generate the set statement for each column
                     columnAssignments += `set @${columns[i].name} = Field(@row, "${columns[i].name}")\n\t\t\t`;
 
-                    // Optionally add these columns to output for debugging purposes
-                    outputLineColumns += `" ${columns[i].name}: ", @${columns[i].name}`;
+                    
                 }
             }
+
+            // Optionally add these columns to output for debugging purposes
+            outputLineColumns += `" ${columns[0].name}: ", @${columns[0].name}`;
 
             // Replace the placeholder in the content with the dynamic column assignments
             content = content.replace(/{{columnAssignments}}/g, columnAssignments);
