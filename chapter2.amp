@@ -23,7 +23,7 @@
         for @index = 1 to @rowCount do
             set @row = Row(@rows, @index)
 
-            {{columnAssignments}}  /* This will be replaced with set @columnX lines */
+            {{columnAssignments}}  
 
             /* Optionally: you can output these values for debugging or further use */
             OutputLine(concat({{outputLineColumns}}))
