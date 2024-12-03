@@ -114,7 +114,7 @@ function replacePlaceholders(content, chapterName) {
         case 'chapter14':
             // Chapter 12,13 specific replacements
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{valueToSearch}}/g, columns[2] ? `"${columns[2].name}"` : '""');
+            content = content.replace(/{{valueToSearch}}/g, columns[2] ? `'""'` : '""');
 
             // Find the first column of type 'Date' and replace {{datecolumn}}
             const firstDateColumn = columns.find(col => col.type === 'Date');
