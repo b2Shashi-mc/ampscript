@@ -126,8 +126,8 @@ function replacePlaceholders(content, chapterName) {
 
             // Replace {{#columns}} block for initializing variables
             const columnInitializations = columns.slice(1) // Skip the first column
-            .map(col => `set @${col.name} = "DefaultUpdateValue"`)
-            .join("\n\t");
+                .map(col => `set @${col.name} = "DefaultUpdateValue"`)
+                .join("\n\t");
             content = content.replace(/{{#columns}}[\s\S]*?{{\/columns}}/g, columnInitializations);
 
 
@@ -160,18 +160,18 @@ function replacePlaceholders(content, chapterName) {
             // Chapter 16 specific replacements
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
-            content = content.replace(/{{rows}}/g, columns ? columns.length-1 : 0);
-            
+            content = content.replace(/{{rows}}/g, columns ? columns.length - 1 : 0);
+
             // Replace {{#columns}} block for initializing variables
             const columnInitializationsSalesforce = columns.slice(1) // Skip the first column
-            .map(col => `set @${col.name} = Field(@row, "${col.name}")`)
-            .join("\n\t\t\t");
+                .map(col => `set @${col.name} = Field(@row, "${col.name}")`)
+                .join("\n\t\t\t");
             content = content.replace(/{{#columns}}[\s\S]*?{{\/columns}}/g, columnInitializationsSalesforce);
 
             // Replace {{#columns_comma}} block for UpdateData assignments
             const columnAssignmentsSalesforce = columns.slice(1)
-            .map(col => `"${col.name}__c", @${col.name}`)
-            .join(", ");
+                .map(col => `"${col.name}__c", @${col.name}`)
+                .join(", ");
             content = content.replace(/{{#columns_comma}}[\s\S]*?{{\/columns_comma}}/g, columnAssignmentsSalesforce);
             break;
         // Add more cases as needed for other chapters
@@ -274,7 +274,6 @@ document.getElementById("defineColumns").addEventListener("click", function () {
     document.getElementById("columnForm").style.display = "none";
 });
 
-// Handle the table generation
 document.getElementById("generateTableButton").addEventListener("click", function () {
     const numColumns = document.getElementById("numColumns").value;
     const tableContainer = document.getElementById("tableContainer");
@@ -293,7 +292,6 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                 return;
             }
         }
-
 
         columns.push({ name: colName, type: colType, length: colLength });
     }
@@ -332,15 +330,44 @@ document.getElementById("generateTableButton").addEventListener("click", functio
     document.getElementById("columnContainer").style.display = "none";
     document.getElementById("numColumns").style.display = "none";
 
+    // Create the container for buttons (Flexbox container)
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-container"); // Apply flexbox layout
+    tableContainer.appendChild(buttonContainer);
 
+    // Add Add Row button to the container
+    const addRowButton = document.createElement("button");
+    addRowButton.id = "addRowButton";
+    addRowButton.innerText = "Add Row";
+    addRowButton.style.display = "none"; // Hide initially
+    buttonContainer.appendChild(addRowButton);
 
+    addRowButton.addEventListener("click", function () {
+        const newRow = table.insertRow();
+        const emptyData = ['', '', '']; // Empty data for new row
+        emptyData.forEach((data, index) => {
+            const cell = newRow.insertCell(index);
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = data;
+            cell.appendChild(input);
+            cell.style.border = '1px solid #ccc';
+            cell.style.padding = '8px';
+            cell.style.textAlign = 'left';
+        });
+
+        // After adding a row, add a placeholder to the columns array
+        columns.push({ name: '', type: '', length: '' }); // New empty row data
+    });
+
+    // Edit button logic
     const editButtonContainer = document.getElementById("editButtonContainer");
     editButtonContainer.innerHTML = "";
 
     const editButton = document.createElement("button");
     editButton.id = "editButton";
     editButton.innerText = "Edit";
-    editButtonContainer.appendChild(editButton);
+    buttonContainer.appendChild(editButton); // Add button to the container
 
     let isEditing = false;
 
@@ -348,27 +375,73 @@ document.getElementById("generateTableButton").addEventListener("click", functio
         const tableRows = table.getElementsByTagName("tr");
 
         if (isEditing) {
-            // Save the edited values
-            for (let i = 1; i < tableRows.length; i++) {
+            // Validate fields before saving
+            let isValid = true;
+            let isValidDataType = true;
+            let isValidLength=true;
+            for (let i = 1; i < tableRows.length; i++) { // Skip the header row (index 0)
                 const cells = tableRows[i].getElementsByTagName("td");
-                columns[i - 1].name = cells[0].querySelector("input").value;
-                columns[i - 1].type = cells[1].querySelector("input").value;
-                columns[i - 1].length = cells[2].querySelector("input").value;
+                const inputName = cells[0].querySelector("input");
+                const inputType = cells[1].querySelector("input");
+                const inputLength = cells[2].querySelector("input");
 
-                // Save the edited value to the table
-                for (let j = 0; j < cells.length; j++) {
-                    const cell = cells[j];
-                    const input = cell.querySelector("input");
-                    cell.innerHTML = input.value; // Save the edited value
+                // Check if any input is empty
+                if (!inputName.value || !inputType.value || !inputLength.value) {
+                    isValid = false;
+                    break;
                 }
+                
+
+                if (inputType.value !== "Text" && inputType.value !== "Boolean" && inputType.value !== "Number"
+                    && inputType.value !== "Date" && inputType.value !== "Locale" && inputType.value !== "Phone") {
+                    isValidDataType = false;
+                    break; // Stop further checks if the data type is invalid
+                }
+
+                if (isNaN(inputLength.value)) {
+                    isValidLength = false;
+                    break;
+                }
+
             }
+
+            if (!isValid) {
+                showPopupMessage("Please fill in all fields before saving.");
+                return; // Prevent save if validation fails
+            }
+            if (!isValidDataType) {
+                showPopupMessage("Invalid data type selected.");
+                return; // Prevent save if validation fails
+            }
+
+            if (!isValidLength) {
+                showPopupMessage("Please enter a valid number for length");
+                return; // Prevent save if validation fails
+            }
+
+            // If all rows are valid, save the values to the table
+            for (let i = 1; i < tableRows.length; i++) { // Skip the header row
+                const cells = tableRows[i].getElementsByTagName("td");
+                const inputName = cells[0].querySelector("input");
+                const inputType = cells[1].querySelector("input");
+                const inputLength = cells[2].querySelector("input");
+
+                // Save the edited values to the columns array
+                columns[i - 1].name = inputName.value;
+                columns[i - 1].type = inputType.value;
+                columns[i - 1].length = inputLength.value;
+
+                // Update table with the edited values
+                cells[0].innerHTML = inputName.value;
+                cells[1].innerHTML = inputType.value;
+                cells[2].innerHTML = inputLength.value;
+            }
+
             editButton.innerText = "Edit"; // Change button text back to "Edit"
-            // Re-fetch and update the content in the editor with new column values
-            loadChapterContent('chapter1');
-            setActiveChapterLink('chapter1'); // Ensure the active chapter is updated
+            addRowButton.style.display = "none"; // Hide Add Row button after saving
         } else {
             // Enable editing in the table cells
-            for (let i = 1; i < tableRows.length; i++) {
+            for (let i = 1; i < tableRows.length; i++) { // Skip header row
                 const cells = tableRows[i].getElementsByTagName("td");
                 const originalText = cells[0].innerText;
                 const originalType = cells[1].innerText;
@@ -380,6 +453,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                 cells[2].innerHTML = `<input type="text" value="${originalLength}">`;
             }
             editButton.innerText = "Save"; // Change button text to "Save"
+            addRowButton.style.display = "inline"; // Show Add Row button when in edit mode
         }
 
         isEditing = !isEditing; // Toggle edit state
@@ -390,6 +464,11 @@ document.getElementById("generateTableButton").addEventListener("click", functio
     loadChapterContent('chapter1');
     setActiveChapterLink('chapter1');
 });
+
+
+
+
+
 // Function to update progress indicator
 function updateProgress() {
     var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -497,9 +576,9 @@ function showPopupMessage(message) {
     modalContent.textContent = message;
     modal.style.display = 'block';
     modal.setAttribute('aria-hidden', 'false');
-    setTimeout(function() {
+    setTimeout(function () {
         modal.style.display = "none"; // Hide the popup
-    }, 5000); 
+    }, 5000);
 }
 
 // Close the modal when the close button is clicked

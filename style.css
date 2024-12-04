@@ -23,7 +23,7 @@
 /* General Styling */
 body {
     font-family: 'Roboto', Arial, sans-serif;
-    font-size: 13px; /* Small font size */
+    font-size: 11px; /* Small font size */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -43,8 +43,8 @@ body {
     color: white;
     text-align: center;
     padding: 6px 0; /* Compact header */
-    padding-left: 60px;
-    font-size: 14px; /* Smaller font */
+    padding-left: 70px;
+    font-size: 12px; /* Smaller font */
     font-weight: 600;
     box-shadow: var(--shadow-light);
     z-index: 1000;
@@ -62,7 +62,7 @@ body {
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
 }
@@ -82,7 +82,7 @@ body {
     background: var(--secondary-bg);
     box-shadow: var(--shadow-light);
     padding: 20px;
-    font-size: 12px; /* Small font */
+    font-size: 11px; /* Small font */
     color: var(--light-text);
     overflow-y: auto;
     overflow-x: hidden;
@@ -96,7 +96,7 @@ body {
     background: var(--light-bg);
     border-radius: 6px;
     text-decoration: none;
-    font-size: 11px; /* Small font */
+    font-size: 10px; /* Small font */
     color: var(--light-text);
     transition: all var(--transition-duration) ease;
 }
@@ -118,7 +118,7 @@ body {
     padding: 20px;
     flex-grow: 1;
     margin-top: 60px;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--light-text);
     line-height: 1.4; /* Tight line spacing */
 }
@@ -144,7 +144,7 @@ select {
     width: 100%;
     padding: 10px 12px;
     margin: 8px 0;
-    font-size: 12px; /* Small font */
+    font-size: 11px; /* Small font */
     border: 1px solid var(--border-color);
     border-radius: 6px;
     box-sizing: border-box;
@@ -164,7 +164,7 @@ button {
     cursor: pointer;
     padding: 10px 16px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
 }
@@ -239,7 +239,7 @@ button:disabled {
 }
 
 .popup-content p {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 20px;
 }
 
@@ -248,7 +248,7 @@ button:disabled {
     color: white;
     padding: 10px 20px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     border: none;
     transition: background-color 0.3s ease;
@@ -262,7 +262,7 @@ button:disabled {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 25px;
+    font-size: 20px;
     color: #333;
     cursor: pointer;
 }
@@ -283,7 +283,7 @@ button:disabled {
 
     .open-tab-btn {
         padding: 6px 15px; /* Smaller padding on smaller screens */
-        font-size: 12px; /* Smaller font size */
+        font-size: 11px; /* Smaller font size */
     }
 }
 
@@ -309,7 +309,7 @@ button:disabled {
     height: 700px; /* Set the height */
     padding: 10px; /* Padding for text comfort */
     padding-right: 40px; /* Avoid overlap with scrollbar */
-    font-size: 14px;
+    font-size: 12px;
     border: 1px solid #ccc;
     box-sizing: border-box;
     overflow: auto; /* Enable scrollbars if needed */
@@ -333,7 +333,7 @@ button:disabled {
     height: 700px; /* Adjust height if needed */
     padding: 10px;
     font-family: "Courier New", Courier, monospace;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.5;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -599,3 +599,12 @@ dark-theme .nav-link.active {
 .dark-theme .social-icons a {
     color: #eaeaea; /* Set icon color to light gray for dark theme */
 }
+
+/* Flexbox container for buttons */
+.button-container {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left (or center) */
+    gap: 10px; /* Adds space between the buttons */
+    margin-top: 20px; /* Optional: Space above the buttons */
+}
+
