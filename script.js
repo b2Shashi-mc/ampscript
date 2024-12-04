@@ -61,9 +61,6 @@ function generateColumnAssignments(columns = []) {
 
 // Function to replace placeholders with actual column data based on chapter
 function replacePlaceholders(content, chapterName) {
-
-    
-
     // Dynamic replacement logic based on chapter
     switch (chapterName) {
         case 'chapter1':
@@ -118,11 +115,27 @@ function replacePlaceholders(content, chapterName) {
         case 'chapter9':
         case 'chapter10':
         case 'chapter11':
-            
+            if (!columns || columns.length === 0) {
+                console.error("Columns array is empty or undefined");
+                return content;
+            }
+        
+            // Replace static placeholders
             content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
+        
+            // Replace {{#columns}} block for initializing variables
+            const columnInitializations = columns
+                .map(col => `set @${col.name} = "DefaultUpdateValue"`)
+                .join("\n\t");
+            content = content.replace(/{{#columns}}[\s\S]*?{{\/columns}}/g, columnInitializations);
+        
+            // Replace {{#columns_comma}} block for UpdateData assignments
+            const columnAssignmentschap8 = columns
+                .map(col => `"${col.name}", @${col.name}`)
+                .join(", ");
+            content = content.replace(/{{#columns_comma}}[\s\S]*?{{\/columns_comma}}/g, columnAssignmentschap8);
+        
             break;
-
         case 'chapter12':
         case 'chapter13':
         case 'chapter14':
