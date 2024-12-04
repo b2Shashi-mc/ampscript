@@ -232,6 +232,7 @@ document.getElementById("defineColumns").addEventListener("click", function () {
     }
 
     document.getElementById("generateTableButton").style.display = "inline-block";
+    document.getElementById("columnForm").style.display = "none";
 });
 
 // Handle the table generation
