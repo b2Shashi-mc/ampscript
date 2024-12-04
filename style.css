@@ -95,7 +95,7 @@ body {
     background: var(--light-bg);
     border-radius: 6px;
     text-decoration: none;
-    font-size: 12px; /* Small font */
+    font-size: 11px; /* Small font */
     color: var(--light-text);
     transition: all var(--transition-duration) ease;
 }
