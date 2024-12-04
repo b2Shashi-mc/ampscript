@@ -125,13 +125,14 @@ function replacePlaceholders(content, chapterName) {
             content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
 
             // Replace {{#columns}} block for initializing variables
-            const columnInitializations = columns
-                .map(col => `set @${col.name} = "DefaultUpdateValue"`)
-                .join("\n\t");
+            const columnInitializations = columns.slice(1) // Skip the first column
+            .map(col => `set @${col.name} = "DefaultUpdateValue"`)
+            .join("\n\t");
             content = content.replace(/{{#columns}}[\s\S]*?{{\/columns}}/g, columnInitializations);
 
+
             // Replace {{#columns_comma}} block for UpdateData assignments
-            const columnAssignmentschap8 = columns
+            const columnAssignmentschap8 = columns.slice(1)
                 .map(col => `"${col.name}", @${col.name}`)
                 .join(", ");
             content = content.replace(/{{#columns_comma}}[\s\S]*?{{\/columns_comma}}/g, columnAssignmentschap8);
@@ -159,9 +160,19 @@ function replacePlaceholders(content, chapterName) {
             // Chapter 16 specific replacements
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
-            content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
-            content = content.replace(/{{column3}}/g, columns[2] ? `${columns[2].name}` : '""');
+            content = content.replace(/{{rows}}/g, columns ? columns.length-1 : 0);
+            
+            // Replace {{#columns}} block for initializing variables
+            const columnInitializationsSalesforce = columns.slice(1) // Skip the first column
+            .map(col => `set @${col.name} = Field(@row, "${col.name}")`)
+            .join("\n\t\t\t");
+            content = content.replace(/{{#columns}}[\s\S]*?{{\/columns}}/g, columnInitializationsSalesforce);
+
+            // Replace {{#columns_comma}} block for UpdateData assignments
+            const columnAssignmentsSalesforce = columns.slice(1)
+            .map(col => `"${col.name}__c", @${col.name}`)
+            .join(", ");
+            content = content.replace(/{{#columns_comma}}[\s\S]*?{{\/columns_comma}}/g, columnAssignmentsSalesforce);
             break;
         // Add more cases as needed for other chapters
         default:
