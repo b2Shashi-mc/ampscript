@@ -3,15 +3,15 @@
     set @dataExtensionName = "My_DataExtension"
 
     /* Initialize variables for column values */
-    set @column1Value = ""
-    set @column2Value = ""
+    set @{{column1}} = ""
+    set @{{column2}} = ""
 
     /* Insert data into the specified data extension */
     /* InsertData function adds a new row to the data extension
      with the specified column values */
     set @isInserted = InsertData(@dataExtensionName, 
-                                {{column1}}, @column1Value, 
-                                {{column2}}, @column2Value)
+                                {{column1}}, @{{column1}}, 
+                                {{column2}}, @{{column2}})
 
     /* Output the result of the InsertData function */
     /* The function returns 1 for success and 0 for failure */
