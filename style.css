@@ -43,6 +43,7 @@ body {
     color: white;
     text-align: center;
     padding: 6px 0; /* Compact header */
+    padding-left: 60px;
     font-size: 14px; /* Smaller font */
     font-weight: 600;
     box-shadow: var(--shadow-light);
@@ -571,4 +572,30 @@ dark-theme .nav-link.active {
 /* Auto hide modal after a short delay */
 .copy-modal.show {
     animation: fadeIn 0.3s ease-out, hideModal 3s forwards;
+}
+.social-icons {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    color: #000; /* Change to your preferred color */
+    font-size: 1.5rem; /* Adjust icon size */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #0077b5; /* Highlight color on hover */
+}
+/* Dark theme hover adjustment */
+.dark-theme .social-icons a:hover {
+    color: #1DA1F2; /* Twitter blue or any other highlight color you prefer */
+}
+
+.dark-theme .social-icons a {
+    color: #eaeaea; /* Set icon color to light gray for dark theme */
 }
