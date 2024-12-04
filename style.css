@@ -561,3 +561,21 @@ dark-theme .nav-link.active {
 .dark-theme .h2 {
     background-color: #f6f4f4;
 }
+
+.copy-modal {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #444;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    animation: fadeInOut 2s;
+}
+
+/* Auto hide modal after a short delay */
+.copy-modal.show {
+    animation: fadeIn 0.3s ease-out, hideModal 3s forwards;
+}
