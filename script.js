@@ -201,7 +201,7 @@ document.getElementById("defineColumns").addEventListener("click", function () {
         columnDiv.classList.add("column-input");
 
         columnDiv.innerHTML = ` 
-            <input type="text" id="colName${i}" placeholder="Column Name" required>
+            <input type="text" id="colName${i}" placeholder="Attribute Name" required>
             <select id="colType${i}">
                 <option value="Text">Text</option>
                 <option value="EmailAddress">EmailAddress</option>
@@ -215,13 +215,21 @@ document.getElementById("defineColumns").addEventListener("click", function () {
         `;
         columnContainer.appendChild(columnDiv);
 
+
+
         const dataTypeSelect = document.getElementById(`colType${i}`);
         const maxLengthInput = document.getElementById(`colLength${i}`);
 
         dataTypeSelect.addEventListener("change", function () {
             if (dataTypeSelect.value === "Date" || dataTypeSelect.value === "Number" || dataTypeSelect.value === "Boolean" || dataTypeSelect.value === "Phone" || dataTypeSelect.value === "Locale") {
                 maxLengthInput.disabled = true; // Disable Max Length input for Date or Number
-            } else {
+                maxLengthInput.value = "";
+            } else if(dataTypeSelect.value === "EmailAddress"){
+                maxLengthInput.disabled = true; // Enable Max Length input for other types
+                maxLengthInput.value = 254;
+            }
+            else {
+                maxLengthInput.value = 50;
                 maxLengthInput.disabled = false; // Enable Max Length input for other types
             }
         });
