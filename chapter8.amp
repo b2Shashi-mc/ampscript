@@ -2,38 +2,22 @@
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"
 
-    /* Initialize variables for search criteria */
+    /* Initialize variables for search criteria and columns to be updated */
     set @search1Column = "{{column1}}" /* The column used for searching rows to update */
     set @search1Value = "SomeSearchValue" /* The value to search for in @search1Column */
     set @noOfColumnsToSearch = 1 /* Number of columns to search in the data extension */
 
-    /* Dynamic placeholders for update columns and values */
-    set @UpdateColumns = "" /* This will store the final list of update columns */
-    set @UpdateValues = "" /* This will store the final list of update values */
-
-    /* Loop through the columns array to generate dynamic update columns */
-    %%[
-    for @i = 2 to RowCount(columns) do
-        /* Get the column name and dynamically set placeholders */
-        set @UpdateColumn = Column(@i).name
-        set @UpdateColumnValue = Concat("UpdatedValue", Subtract(@i, 1))
-
-        /* Append column and value to the update lists */
-        if @UpdateColumns == "" then
-            set @UpdateColumns = @UpdateColumn
-            set @UpdateValues = @UpdateColumnValue
-        else
-            set @UpdateColumns = Concat(@UpdateColumns, ", ", @UpdateColumn)
-            set @UpdateValues = Concat(@UpdateValues, ", ", @UpdateColumnValue)
-        endif
-    next
-    ]%%
+    set @Update1Column = "{{column2}}" /* The column to be updated */
+    set @Update1Value = "UpdatedValue" /* The new value to update in @Update1Column */
 
     /* Update data in the specified data extension */
+    /* The UpdateData function updates rows in the data extension
+     where the search criteria are matched */
     set @isUpdated = UpdateData(@dataExtensionName, @noOfColumnsToSearch, 
                                 @search1Column, @search1Value, 
-                                @UpdateColumns, @UpdateValues)
+                                @Update1Column, @Update1Value)
 
     /* Output the result of the UpdateData function */
+    /* The function returns 1 for success and 0 for failure */
     Output(v(@isUpdated))
 ]%%
