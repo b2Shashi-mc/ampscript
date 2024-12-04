@@ -102,11 +102,23 @@ function replacePlaceholders(content, chapterName) {
 
         case 'chapter6':
         case 'chapter7':
+             // Initialize variables dynamically
+            const columnInitialization = columns.map(col => `set @${col.name} = ""`).join("\n\t");
+
+            // Construct InsertData arguments dynamically
+            const insertDataColumns = columns
+                .map(col => `"${col.name}", @${col.name}`) // Each column as "Name", @Name
+                .join(", "); // Join with commas
+
+            // Replace placeholders in the content
+            content = content.replace(/{{#columns}}[\s\S]*?{{\/columns}}/g, columnInitialization);
+            content = content.replace(/{{#columns_comma}}[\s\S]*?{{\/columns_comma}}/g, insertDataColumns);
+            break;
         case 'chapter8':
         case 'chapter9':
         case 'chapter10':
         case 'chapter11':
-            // Chapter 6 specific replacements
+            
             content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
             content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
             break;
