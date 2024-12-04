@@ -7,8 +7,10 @@
     set @search1Value = "SomeSearchValue" /* The value to search for in @search1Column */
     set @noOfColumnsToSearch = 1 /* Number of columns to search in the data extension */
 
-    set @Update1Column = "{{column2}}" /* The column to be updated */
-    set @Update1Value = "UpdatedValue" /* The new value to update in @Update1Column */
+   /* Initialize variables to with updated values */
+    {{#columns}}
+    set @{{Updatecolumn}} = "{{UpdateValue}}"
+    {{/columns}}
 
     /* Use UpsertData to insert or update the row in the specified data extension */
     /* The function will update rows where @search1Column matches @search1Value,
@@ -16,7 +18,8 @@
     set @isUpdated = UpsertData(@dataExtensionName, 
                                  @noOfColumnsToSearch, 
                                  @search1Column, @search1Value, 
-                                 @Update1Column, @Update1Value)
+                                {{#columns_comma}}"{{column}}", @{{column}}{{/columns_comma}}
+                                )
 
     /* Output the result of the UpsertData function */
     /* The function returns 1 for success (insert or update) and 0 for failure */
