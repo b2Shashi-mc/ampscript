@@ -7,15 +7,18 @@
     set @search1Value = "SomeSearchValue" /* The value to search for in @search1Column */
     set @noOfColumnsToSearch = 1 /* Number of columns to search in the data extension */
 
-    set @Update1Column = "{{column2}}" /* The column to be updated */
-    set @Update1Value = "UpdatedValue" /* The new value to update in @Update1Column */
+    /* Initialize variables for column values */
+    {{#columns}}
+    set @{{Updatecolumn}} = "{{UpdateValue}}"
+    {{/columns}}
 
     /* Update data in the specified data extension */
     /* The UpdateData function updates rows in the data extension
      where the search criteria are matched */
     set @isUpdated = UpdateData(@dataExtensionName, @noOfColumnsToSearch, 
                                 @search1Column, @search1Value, 
-                                @Update1Column, @Update1Value)
+                               {{#columns_comma}}"{{column}}", @{{column}}{{/columns_comma}}
+                                )
 
     /* Output the result of the UpdateData function */
     /* The function returns 1 for success and 0 for failure */
