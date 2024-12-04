@@ -23,14 +23,17 @@
         /* Loop through each row and extract values for specified columns */
         for @index = 1 to @rowCount do
             set @row = Row(@rows, @index)
-
+            /* Assuming the first attribute in the data extension is Subscriberkey 
+               else update line no 29 with the salesforce ID equivalent attribute
+            */
+            set @salesforceId=Field(@row,"Subscriberkey")
             /* Fetch values for the specified columns and assign them to variables */
             {{#columns}}
             set @{{column}} = Field(@row, "{{column}}")
             {{/columns}}
             
             /* Update Salesforce Lead record */
-            set @result = UpdateSingleSalesforceObject("Lead", @valueToSearch,
+            set @result = UpdateSingleSalesforceObject("Lead", @salesforceId,
                                                    {{#columns_comma}}"{{column}}", @{{column}}{{/columns_comma}}
                                                     )
         next @index
