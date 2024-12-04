@@ -25,15 +25,14 @@
             set @row = Row(@rows, @index)
 
             /* Fetch values for the specified columns and assign them to variables */
-            set @{{column1}} = Field(@row, "{{column1}}")
-            set @{{column2}} = Field(@row, "{{column2}}")
-            set @{{column3}} = Field(@row, "{{column3}}")
+            {{#columns}}
+            set @{{column}} = Field(@row, "{{column}}")
+            {{/columns}}
             
             /* Update Salesforce Lead record */
             set @result = UpdateSingleSalesforceObject("Lead", @valueToSearch,
-                                                   "{{column1}}", @{{column1}},
-                                                   "{{column2}}", @{{column2}},
-                                                   "{{column3}}", @{{column3}})
+                                                   {{#columns_comma}}"{{column}}", @{{column}}{{/columns_comma}}
+                                                    )
         next @index
     endif
 ]%%
