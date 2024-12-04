@@ -284,6 +284,7 @@ button:disabled {
     .open-tab-btn {
         padding: 6px 15px; /* Smaller padding on smaller screens */
         font-size: 11px; /* Smaller font size */
+        gap:10px;
     }
 }
 
@@ -402,11 +403,12 @@ button:disabled {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap:10px;
 }
 
 /* Add an icon to the open-tab-btn */
 .open-tab-btn i {
-    margin-right: 5px; /* Space between the icon and text */
+    margin-right: 8px; /* Space between the icon and text */
 }
 
 .open-tab-btn:hover {
@@ -608,3 +610,26 @@ dark-theme .nav-link.active {
     margin-top: 20px; /* Optional: Space above the buttons */
 }
 
+/* Buy Me A Coffee button styling */
+.buy-me-a-coffee img {
+    width: 120px; /* You can adjust the width to fit your layout */
+    height: auto;
+    border-radius: 5px; /* Slight rounding for aesthetic */
+    transition: transform 0.3s ease; /* Add a smooth hover effect */
+  }
+  
+  .buy-me-a-coffee:hover img {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+  }
+  
+  /* Dark Theme Adjustments */
+  .dark-theme .buy-me-a-coffee img {
+    filter: brightness(0.8); /* Darken the button slightly to match dark theme */
+  }
+  
+  /* Optional: Adding some margin for spacing */
+  .buy-me-a-coffee {
+    margin: 0px 0;
+    display: inline-block; /* Keeps it inline with other content */
+  }
+  
