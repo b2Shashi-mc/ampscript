@@ -20,7 +20,7 @@ const editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
 function loadChapterContent(chapterName) {
     // Validate if the table is generated before loading content
     if (!isTableGenerated) {
-        showPopupMessage("Please generate the table before fetching chapter content.");
+        showPopupMessage("Please create the data extension first before generating the AMPscript code.");
         return;
     }
 
@@ -187,7 +187,8 @@ document.getElementById("defineColumns").addEventListener("click", function () {
     const columnContainer = document.getElementById("columnContainer");
 
     if (numColumns < 3) {
-        showPopupMessage("Please define at least 3 columns.");
+        showPopupMessage("Please specify at least 3 attributes that you would like to define for the data extension.");
+        document.getElementById('numColumns').focus();
         return;
     }
 
@@ -249,7 +250,8 @@ document.getElementById("generateTableButton").addEventListener("click", functio
 
         if (colType === "Text") {
             if (!colName || !colType || !colLength) {
-                showPopupMessage(`Please fill in all details for Column ${i + 1}`);
+                showPopupMessage(`Please fill in all details for Attribute ${i + 1}`);
+                document.getElementById(`colName${i}`).focus();
                 return;
             }
         }
@@ -416,7 +418,7 @@ document.getElementById('chapterSearch').addEventListener('input', function () {
 
 // Show the popup modal when the page loads
 window.onload = function () {
-    document.getElementById('popupModal').style.display = 'block';
+   // document.getElementById('popupModal').style.display = 'block';
     document.getElementById('numColumns').focus();
 };
 
