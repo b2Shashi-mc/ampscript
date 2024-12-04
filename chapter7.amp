@@ -3,14 +3,13 @@
     set @dataExtensionName = "My_DataExtension"
 
     /* Initialize variables for column values */
-    set @{{column1}} = ""
-    set @{{column2}} = ""
+    {{#columns}}
+    set @{{column}} = ""
+    {{/columns}}
 
     /* Insert data into the specified data extension */
-    /* InsertData function adds a new row to the data extension
-     with the specified column values */
     set @isInserted = InsertDE(@dataExtensionName, 
-                               "{{column1}}", @{{column1}}, 
-                               "{{column2}}", @{{column2}})
+        {{#columns}}"{{column}}", @{{column}}{{/columns_comma}}
+    )
 
 ]%%
