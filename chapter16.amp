@@ -30,7 +30,7 @@
             {{/columns}}
             
             /* Create Salesforce Lead record */
-            set @id = CreateSalesforceObject("Lead", 3,
+            set @id = CreateSalesforceObject("Lead",{{rows}},
                                           {{#columns_comma}}"{{column}}", @{{column}}{{/columns_comma}}
                                           )
         next @index
