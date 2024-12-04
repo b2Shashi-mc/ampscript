@@ -11,7 +11,9 @@ const editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
     theme: "dracula", // Default theme set to dracula (dark mode)
     matchBrackets: true,
     autoCloseBrackets: true, // Automatically close brackets
-    extraKeys: { "Ctrl-Space": "autocomplete" } // Enable autocompletion
+    extraKeys: { "Ctrl-Space": "autocomplete" }, // Enable autocompletion
+    viewportMargin: Infinity, // This makes the editor expand to fit its container
+    lineWrapping: true,  // Allows long lines to wrap
 });
 
 // Function to fetch content from GitHub and update the code editor
@@ -470,5 +472,18 @@ function setActiveChapterLink(chapterName) {
     }
 }
 
+document.getElementById('ws-proxy').addEventListener('click', function () {
+    window.open('https://b2shashi-mc.github.io/WS-Proxy/', '_blank');
+});
+
+document.getElementById('data-views').addEventListener('click', function () {
+    window.open('https://b2shashi-mc.github.io/data-views/', '_blank');
+});
+document.getElementById('SSJS').addEventListener('click', function () {
+    window.open('https://b2shashi-mc.github.io/ssjs-core/', '_blank');
+});
+document.getElementById('ampscript').addEventListener('click', function () {
+    window.open('https://b2shashi-mc.github.io/ampscript-soap-api/', '_blank');
+});
 
 

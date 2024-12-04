@@ -17,14 +17,18 @@
 
     <!-- Include CodeMirror CSS for code editor styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/theme/dracula.min.css">
 </head>
 
 <body>
     <header class="page-header">
         <h1>AMPSCRIPTIFY</h1>
         <button class="theme-toggle" id="toggleThemeButton">Toggle Theme</button>
+        <div class="right-buttons">
+            <button class="open-tab-btn" id="ws-proxy">WS-Proxy</button>
+            <button class="open-tab-btn" id="data-views">Data Views</button>
+            <button class="open-tab-btn" id="SSJS">SSJS</button>
+            <button class="open-tab-btn" id="ampscript">AMPscript</button>
+        </div>
     </header>
 
     <nav class="left-navigation">
@@ -108,7 +112,7 @@
                 <div class="code-panel">
                     <h3>AMPscript Code Editor:</h3>
 
-                    <textarea id="codeEditor" name="code" rows="30" cols="50">
+                    <textarea id="codeEditor" name="code" rows="80" cols="50">
 %%[
     /*
 

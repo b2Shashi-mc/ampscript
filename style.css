@@ -5,14 +5,32 @@
     box-sizing: border-box;
 }
 
-/* Body Styling */
+/* Root Variables for Themes */
+:root {
+    --primary-color: #4CAF50;
+    --primary-hover-color: #45a049;
+    --dark-bg: #121212;
+    --light-bg: #ffffff;
+    --light-text: #333;
+    --dark-text: #eaeaea;
+    --secondary-bg: #f8f8f8;
+    --border-color: #ddd;
+    --shadow-light: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --shadow-dark: 0 4px 10px rgba(0, 0, 0, 0.2);
+    --transition-duration: 0.3s;
+}
+
+/* General Styling */
 body {
     font-family: 'Roboto', Arial, sans-serif;
+    font-size: 13px; /* Small font size */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background: var(--light-bg);
+    color: var(--light-text);
     margin: 0;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background var(--transition-duration) ease, color var(--transition-duration) ease;
 }
 
 /* Page Header */
@@ -21,34 +39,31 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to right, #4CAF50, #388E3C);
+    background: var(--primary-color);
     color: white;
     text-align: center;
-    padding: 8px 0;
-    font-size: 16px;
-    /* Decreased size for a more compact look */
+    padding: 6px 0; /* Compact header */
+    font-size: 14px; /* Smaller font */
     font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-light);
     z-index: 1000;
-    transition: background 0.3s ease;
     margin-bottom: 60px;
 }
 
 /* Theme Toggle Button */
 .theme-toggle {
     position: absolute;
-    right: 20px;
-    top: 15px;
-    background: #ffffff;
-    color: #4CAF50;
+    right: 15px;
+    top: 10px;
+    background: var(--light-bg);
+    color: var(--primary-color);
     border: none;
-    padding: 10px 16px;
+    padding: 8px 12px;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 20px;
     font-size: 12px;
-    /* Decreased font size */
     font-weight: 500;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
 }
 
 .theme-toggle:hover {
@@ -56,122 +71,114 @@ body {
     transform: scale(1.05);
 }
 
+/* Left Navigation */
 .left-navigation {
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 0;
     width: 240px;
-    height: calc(100% - 70px);
-    /* Adjusted height */
-    background: #f8f8f8;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-    padding: 30px 20px;
-    font-size: 14px;
-    color: #333;
+    height: calc(100% - 60px);
+    background: var(--secondary-bg);
+    box-shadow: var(--shadow-light);
+    padding: 20px;
+    font-size: 12px; /* Small font */
+    color: var(--light-text);
     overflow-y: auto;
-    /* Enable scrolling */
     overflow-x: hidden;
-    /* Prevent horizontal scrolling */
 }
 
-.chapter-list {
-    overflow: visible;
-    height: auto;
-    /* Ensure full height is respected */
-}
-
+/* Navigation Links */
 .nav-link {
     display: block;
-    padding: 12px 20px;
-    margin: 12px 0;
-    /* Space between links */
-    background: #ffffff;
-    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    background: var(--light-bg);
+    border-radius: 6px;
     text-decoration: none;
-    font-size: 10px;
-    color: #333;
-    transition: all 0.3s ease;
+    font-size: 12px; /* Small font */
+    color: var(--light-text);
+    transition: all var(--transition-duration) ease;
 }
 
 .nav-link:hover {
     background: #f0f0f0;
-    color: #388E3C;
+    color: var(--primary-color);
+}
+
+.nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
 }
 
 /* Main Content */
 .content {
     margin-left: 260px;
-    padding: 30px;
+    padding: 20px;
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    height: calc(100% - 70px);
-    margin-top: 70px;
-    font-size: 14px;
-    /* Decreased font size */
-    color: #333;
-    line-height: 1.6;
+    margin-top: 60px;
+    font-size: 13px;
+    color: var(--light-text);
+    line-height: 1.4; /* Tight line spacing */
 }
 
-/* Card-Like Chapter Containers */
+/* Chapters */
 .chapter {
     width: 100%;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    transition: transform 0.3s ease;
+    padding: 15px;
+    background-color: var(--light-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow-light);
+    margin-top: 15px;
+    transition: transform var(--transition-duration) ease;
 }
 
 .chapter:hover {
     transform: translateY(-5px);
 }
 
-/* Inputs and Buttons */
+
+/* Inputs */
 input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="number"],
 select {
     width: 100%;
-    padding: 12px 16px;
-    margin: 10px 0;
-    font-size: 13px;
-    /* Smaller font size */
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    font-size: 12px; /* Small font */
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     box-sizing: border-box;
-    transition: border-color 0.3s ease;
+    transition: border-color var(--transition-duration) ease;
 }
 
 input:focus,
 select:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: var(--primary-color);
 }
 
 /* Buttons */
 button {
-    background: #4CAF50;
+    background: var(--primary-color);
     color: white;
     cursor: pointer;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    /* Smaller font size */
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 12px;
     font-weight: 500;
-    transition: background 0.3s ease, transform 0.2s ease;
+    transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
 }
 
 button:hover {
-    background: #45a049;
+    background: var(--primary-hover-color);
     transform: scale(1.05);
 }
 
 button:disabled {
-    background: #ddd;
+    background: var(--border-color);
     cursor: not-allowed;
 }
 
@@ -179,106 +186,245 @@ button:disabled {
 .footer {
     text-align: center;
     padding: 5px;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--light-text);
+    color: var(--light-bg);
     position: fixed;
     width: 100%;
     bottom: 0;
 }
 
-.footer p {
-    margin: 0;
-}
-
-/* Light Theme Styles */
-.light-theme {
-    background-color: #ffffff;
-    color: #333;
-}
-
-.light-theme .page-header {
-    background: linear-gradient(to right, #4CAF50, #388E3C);
-}
-
-.light-theme .nav-link {
-    background-color: #ffffff;
-    color: #333;
-}
-
-.light-theme .nav-link:hover {
-    background-color: #e0e0e0;
-}
-
-/* Dark Theme Styles */
-.dark-theme {
-    background-color: #121212;
-    color: #eaeaea;
-}
-
-.dark-theme .page-header {
-    background: linear-gradient(to right, #1a1a1a, #333333);
-}
-
-.dark-theme .theme-toggle {
-    background-color: #333;
-    color: #eaeaea;
-}
-
-.dark-theme .nav-link {
-    background-color: #333;
-    color: #eaeaea;
-}
-
-.dark-theme .nav-link:hover {
-    background-color: #444;
-}
-
-.dark-theme .popup-content {
-    background-color: #444;
-}
-
-.dark-theme .h2 {
-    background-color: #f6f4f4;
-}
-
-/* Active Link Styling */
-.nav-link.active {
-    background-color: #388E3C;
-    color: white;
-    font-weight: 600;
-}
-
-/* Progress Indicator Container */
+/* Progress Bar */
 .progress-indicator-container {
     width: 100%;
-    height: 8px;
-    background-color: #ddd;
+    height: 6px;
+    background-color: var(--border-color);
     position: fixed;
-    top: 60px;
+    top: 50px;
     left: 0;
     z-index: 999;
-    transition: all 0.3s ease;
 }
 
-/* Actual Progress Bar */
 .progress-indicator {
     height: 100%;
     width: 0%;
-    background-color: #4CAF50;
+    background-color: var(--primary-color);
     transition: width 0.1s ease;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
+/* Modal styles */
+.popup-modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 80%;
+    max-width: 400px;
+    z-index: 1001;
+    /* Ensure it's above other content */
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.popup-content h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #333;
+}
+
+.popup-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.popup-content button {
+    background-color: #388E3C;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.popup-content button:hover {
+    background-color: #2e7d32;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 25px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .left-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-top: 70px;
+        padding: 20px;
     }
 
-    100% {
-        opacity: 1;
+    .content {
+        margin-left: 0;
+    }
+
+    .open-tab-btn {
+        padding: 6px 15px; /* Smaller padding on smaller screens */
+        font-size: 12px; /* Smaller font size */
     }
 }
 
+/* Style for the code-panel container */
+.code-panel {
+    position: relative; /* Necessary for absolute positioning inside */
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f4f4f4; /* Editor background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 20px;
+    overflow: hidden; /* Prevent overflow if the content overflows */
+    height: auto; /* Allow the container to adjust based on content */
+}
+
+/* Style for the code editor textarea */
+/* Code Editor Styling */
+#codeEditor {
+    width: 100%;
+    height: 700px; /* Set the height */
+    padding: 10px; /* Padding for text comfort */
+    padding-right: 40px; /* Avoid overlap with scrollbar */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    overflow: auto; /* Enable scrollbars if needed */
+    resize: none; /* Disable resizing */
+}
+
+/* Positioning for Copy Button */
+/* Style for the code panel */
+.code-panel {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Style for the textarea */
+#codeEditor {
+    width: 100%;
+    height: 700px; /* Adjust height if needed */
+    padding: 10px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Allows the user to resize the textarea */
+    overflow: auto; /* Ensures scrollbars show when needed */
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;  /* Adjust the top distance from the container */
+    right: 50px;  /* Decreased right value to move the button a little left */
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10; /* Ensure the button stays on top of other elements */
+}
+
+.copy-btn:hover {
+    background-color: #555;
+}
+
+/* Adjusting Icon Button similarly */
+.icon-btn {
+    background: transparent;
+    border: none;
+    position: absolute; /* Position it relative to the code-panel */
+    top: 10px; /* Adjust spacing from the top */
+    right: 50px; /* Decreased right value to move it a little left */
+    cursor: pointer;
+    padding: 5px; /* Button padding */
+    font-size: 50px;
+    color: #420bd8; /* Icon color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5; /* Ensure it stays above other elements */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.icon-btn i {
+    font-size: 30px; /* Icon size */
+}
+
+.icon-btn:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.icon-btn:active {
+    transform: scale(0.95);
+}
+
+/* General button styling for open-tab-btn */
+.open-tab-btn {
+    background-color: #343a40; /* Dark background similar to theme-toggle */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 18px;
+    font-size: 13px; /* Small font */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add an icon to the open-tab-btn */
+.open-tab-btn i {
+    margin-right: 5px; /* Space between the icon and text */
+}
+
+.open-tab-btn:hover {
+    background-color: #495057; /* Slightly lighter on hover */
+    transform: scale(1.05);
+}
+
+.open-tab-btn:active {
+    transform: scale(0.95); /* Button shrinks slightly on click */
+}
+
+.open-tab-btn:disabled {
+    background-color: #ced4da;
+    cursor: not-allowed;
+}
 /* Column Input Styling */
 #columnContainer {
     display: flex;
@@ -354,193 +500,4 @@ button:disabled {
 .column-input button:disabled {
     background-color: #ddd;
     cursor: not-allowed;
-}
-
-.copy-modal {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #444;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1000;
-    animation: fadeInOut 2s;
-}
-
-@keyframes fadeInOut {
-
-    0%,
-    100% {
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Slide-in animation */
-@keyframes slideIn {
-    0% {
-        transform: translateY(-30px);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Auto hide modal after a short delay */
-.copy-modal.show {
-    animation: fadeIn 0.3s ease-out, hideModal 3s forwards;
-}
-
-@keyframes hideModal {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-        display: none;
-    }
-}
-
-.code-panel {
-    position: relative;
-}
-
-.icon-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    font-size: 50px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    /* Position it at the right side */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon-btn i {
-    color: #420bd8;
-    /* Color for the icon */
-}
-
-.icon-btn:hover {
-    opacity: 0.8;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .left-navigation {
-        width: 100%;
-        height: auto;
-        position: relative;
-        margin-top: 80px;
-        /* Added for top spacing */
-        padding: 20px;
-    }
-
-    .content {
-        margin-left: 0;
-        margin-top: 80px;
-        padding: 20px;
-    }
-
-    .nav-link {
-        font-size: 12px;
-        /* Adjusted font size for smaller screens */
-    }
-
-    .chapter {
-        padding: 15px;
-    }
-}
-
-/* Modal styles */
-.popup-modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 80%;
-    max-width: 400px;
-    z-index: 1001;
-    /* Ensure it's above other content */
-    border-radius: 8px;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.popup-content h2 {
-    margin-bottom: 15px;
-    font-size: 20px;
-    color: #333;
-}
-
-.popup-content p {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.popup-content button {
-    background-color: #388E3C;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.popup-content button:hover {
-    background-color: #2e7d32;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 25px;
-    color: #333;
-    cursor: pointer;
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }
