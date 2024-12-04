@@ -9,7 +9,7 @@
 
     /* Insert data into the specified data extension */
     set @isInserted = InsertDE(@dataExtensionName, 
-        {{#columns}}"{{column}}", @{{column}}{{/columns_comma}}
+        {{#columns_comma}}"{{column}}", @{{column}}{{/columns_comma}}
     )
 
 ]%%
