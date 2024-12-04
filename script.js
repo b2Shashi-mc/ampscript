@@ -107,8 +107,8 @@ function replacePlaceholders(content, chapterName) {
         case 'chapter10':
         case 'chapter11':
             // Chapter 6 specific replacements
-            content = content.replace(/{{column1}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{column2}}/g, columns[1] ? `"${columns[1].name}"` : '""');
+            content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
+            content = content.replace(/{{column2}}/g, columns[1] ? `${columns[1].name}` : '""');
             break;
 
         case 'chapter12':

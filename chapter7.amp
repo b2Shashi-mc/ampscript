@@ -10,7 +10,7 @@
     /* InsertData function adds a new row to the data extension
      with the specified column values */
     set @isInserted = InsertDE(@dataExtensionName, 
-                                {{column1}}, @{{column1}}, 
-                                {{column2}}, @{{column2}})
+                               "{{column1}}", @{{column1}}, 
+                               "{{column2}}", @{{column2}})
 
 ]%%
