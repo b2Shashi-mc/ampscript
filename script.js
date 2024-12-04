@@ -4,6 +4,7 @@ let columns = [];  // Store the table column data
 // Select all links with the class 'nav-link'
 const navLinks = document.querySelectorAll('.nav-link');
 
+
 // CodeMirror initialization for the code editor
 const editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
     lineNumbers: true,
@@ -51,7 +52,7 @@ function generateColumnAssignments(columns = []) {
     for (let i = 0; i < columns.length; i++) {
         if (columns[i]) {
             columnAssignments += `set @${columns[i].name} = Field(@row, "${columns[i].name}")\n\t\t\t`;
-            
+
         }
     }
     outputLineColumns += `" ${columns[0].name}: ", @${columns[0].name}`;
@@ -99,7 +100,7 @@ function replacePlaceholders(content, chapterName) {
 
         case 'chapter6':
         case 'chapter7':
-             // Initialize variables dynamically
+            // Initialize variables dynamically
             const columnInitialization = columns.map(col => `set @${col.name} = ""`).join("\n\t");
 
             // Construct InsertData arguments dynamically
@@ -119,33 +120,38 @@ function replacePlaceholders(content, chapterName) {
                 console.error("Columns array is empty or undefined");
                 return content;
             }
-        
+
             // Replace static placeholders
             content = content.replace(/{{column1}}/g, columns[0] ? `${columns[0].name}` : '""');
-        
+
             // Replace {{#columns}} block for initializing variables
             const columnInitializations = columns
                 .map(col => `set @${col.name} = "DefaultUpdateValue"`)
                 .join("\n\t");
             content = content.replace(/{{#columns}}[\s\S]*?{{\/columns}}/g, columnInitializations);
-        
+
             // Replace {{#columns_comma}} block for UpdateData assignments
             const columnAssignmentschap8 = columns
                 .map(col => `"${col.name}", @${col.name}`)
                 .join(", ");
             content = content.replace(/{{#columns_comma}}[\s\S]*?{{\/columns_comma}}/g, columnAssignmentschap8);
-        
+
             break;
         case 'chapter12':
         case 'chapter13':
         case 'chapter14':
             // Chapter 12,13 specific replacements
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
-            content = content.replace(/{{valueToSearch}}/g, columns[2] ?  '""' : '""');
+            content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
 
             // Find the first column of type 'Date' and replace {{datecolumn}}
             const firstDateColumn = columns.find(col => col.type === 'Date');
             content = content.replace(/{{datecolumn}}/g, firstDateColumn ? `"${firstDateColumn.name}"` : '""');
+
+            // Alert if there is no date field
+            if (!firstDateColumn) {
+                showPopupMessage('There is no date field defined!');
+            }
             break;
 
         case 'chapter16':
@@ -237,7 +243,7 @@ document.getElementById("defineColumns").addEventListener("click", function () {
             if (dataTypeSelect.value === "Date" || dataTypeSelect.value === "Number" || dataTypeSelect.value === "Boolean" || dataTypeSelect.value === "Phone" || dataTypeSelect.value === "Locale") {
                 maxLengthInput.disabled = true; // Disable Max Length input for Date or Number
                 maxLengthInput.value = "";
-            } else if(dataTypeSelect.value === "EmailAddress"){
+            } else if (dataTypeSelect.value === "EmailAddress") {
                 maxLengthInput.disabled = true; // Enable Max Length input for other types
                 maxLengthInput.value = 254;
             }
@@ -440,7 +446,7 @@ document.getElementById('chapterSearch').addEventListener('input', function () {
 
 // Show the popup modal when the page loads
 window.onload = function () {
-   // document.getElementById('popupModal').style.display = 'block';
+    // document.getElementById('popupModal').style.display = 'block';
     document.getElementById('numColumns').focus();
 };
 
@@ -480,6 +486,9 @@ function showPopupMessage(message) {
     modalContent.textContent = message;
     modal.style.display = 'block';
     modal.setAttribute('aria-hidden', 'false');
+    setTimeout(function() {
+        modal.style.display = "none"; // Hide the popup
+    }, 5000); 
 }
 
 // Close the modal when the close button is clicked
