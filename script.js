@@ -371,6 +371,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
     isTableGenerated = true;
     // Re-fetch and update the content in the editor with new column values
     loadChapterContent('chapter1');
+    setActiveChapterLink('chapter1');
 });
 // Function to update progress indicator
 function updateProgress() {
