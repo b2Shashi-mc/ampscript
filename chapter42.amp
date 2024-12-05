@@ -23,7 +23,7 @@
   </products>"
 
   /* Parse the XML and build a rowset of products */
-  Set @productRowset = BuildRowsetFromXml(@productsXml, "//product", 1)
+  Set @productRowset = BuildRowsetFromXml(@productsXml, "/product", 1)
 
   /* Loop through each product in the rowset */
   Set @rowCount = RowCount(@productRowset)
