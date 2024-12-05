@@ -1,0 +1,29 @@
+%%[
+  /* Declare variables */
+  Var @rows, @rowCount, @filterExtId
+  
+  /* Set the filter external ID to get the relevant data */
+  Set @filterExtId = "a1b2c3d4-56e7-890f-gh12-ijklmnop3456" 
+  
+  /* Execute the filter to retrieve rows based on the external ID */
+  Set @rows = ExecuteFilter(@filterExtId)
+  
+  /* Get the number of rows returned by the filter */
+  Set @rowCount = RowCount(@rows)
+  
+  /* Check if any rows were returned */
+  If @rowCount > 0 then
+    /* Loop through each row of the returned data */
+    For @counter = 1 to @rowCount do
+      /* Get the current row based on the counter */
+      Set @row = Row(@rows, @counter)
+      
+      /* Retrieve specific fields from the row */
+      {{columnAssignments}}  
+
+            /* Optionally: you can output these values for debugging or further use */
+            OutputLine(concat({{outputLineColumns}}))
+      
+    Next @counter
+  EndIf
+]%%
