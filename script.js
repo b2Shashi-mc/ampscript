@@ -73,9 +73,12 @@ function replacePlaceholders(content, chapterName) {
 
         case 'chapter2':
         case 'chapter3':
+        case 'chapter47':
+        case 'chapter48':
             // Replace specific placeholders like {{attributeToSearch}} and {{valueToSearch}}
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
+            content = content.replace(/{{ColumnToSort}}/g, columns[0] ? `${columns[0].name}` : 'Subscriberkey');
 
             // Use the helper function to generate dynamic column assignments
             const { columnAssignments, outputLineColumns } = generateColumnAssignments(columns);
@@ -83,7 +86,6 @@ function replacePlaceholders(content, chapterName) {
             content = content.replace(/{{columnAssignments}}/g, columnAssignments);
             content = content.replace(/{{outputLineColumns}}/g, outputLineColumns);
             break;
-
         case 'chapter4':
         case 'chapter5':
             // Chapter 4 specific replacements
@@ -403,11 +405,36 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                     inputLength.value=254;
                 }
 
-                if (inputType.value !== "Text" && inputType.value !== "Boolean" && inputType.value !== "Number"
-                    && inputType.value !== "Date" && inputType.value !== "Locale" && inputType.value !== "Phone"
-                    && inputType.value !== "EmailAddress") {
+                if (inputType.value !== "Text" && inputType.value !== "text" 
+                    && inputType.value !== "Boolean" && inputType.value !== "boolean"
+                    && inputType.value !== "Number" && inputType.value !== "number"
+                    && inputType.value !== "Date" && inputType.value !== "date"
+                    && inputType.value !== "Locale" && inputType.value !== "locale"
+                    && inputType.value !== "Phone" && inputType.value !== "phone"
+                    && inputType.value !== "EmailAddress" && inputType.value !== "emailaddress"
+                    && inputType.value !== "emailAddress" && inputType.value !== "email") {
                     isValidDataType = false;
                     break; // Stop further checks if the data type is invalid
+                }
+
+                if(inputType.value === "text" ){
+                    inputType.value = "Text"
+                }
+                if(inputType.value === "boolean" ){
+                    inputType.value = "Boolean"
+                }
+                if(inputType.value === "date" ){
+                    inputType.value = "Date"
+                }
+                if(inputType.value === "locale" ){
+                    inputType.value = "Locale"
+                }
+                if(inputType.value === "phone" ){
+                    inputType.value = "Phone"
+                }
+                if(inputType.value === "emailaddress" ||inputType.value === "emailAddress"
+                    ||inputType.value === "email"){
+                    inputType.value = "EmailAddress"
                 }
 
                 if (isNaN(inputLength.value)) {

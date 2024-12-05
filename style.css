@@ -23,7 +23,8 @@
 /* General Styling */
 body {
     font-family: 'Roboto', Arial, sans-serif;
-    font-size: 11px; /* Small font size */
+    font-size: 11px;
+    /* Small font size */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -42,9 +43,11 @@ body {
     background: var(--primary-color);
     color: white;
     text-align: center;
-    padding: 6px 0; /* Compact header */
+    padding: 6px 0;
+    /* Compact header */
     padding-left: 70px;
-    font-size: 12px; /* Smaller font */
+    font-size: 12px;
+    /* Smaller font */
     font-weight: 600;
     box-shadow: var(--shadow-light);
     z-index: 1000;
@@ -82,7 +85,8 @@ body {
     background: var(--secondary-bg);
     box-shadow: var(--shadow-light);
     padding: 20px;
-    font-size: 11px; /* Small font */
+    font-size: 11px;
+    /* Small font */
     color: var(--light-text);
     overflow-y: auto;
     overflow-x: hidden;
@@ -96,7 +100,8 @@ body {
     background: var(--light-bg);
     border-radius: 6px;
     text-decoration: none;
-    font-size: 10px; /* Small font */
+    font-size: 10px;
+    /* Small font */
     color: var(--light-text);
     transition: all var(--transition-duration) ease;
 }
@@ -120,7 +125,8 @@ body {
     margin-top: 60px;
     font-size: 12px;
     color: var(--light-text);
-    line-height: 1.4; /* Tight line spacing */
+    line-height: 1.4;
+    /* Tight line spacing */
 }
 
 /* Chapters */
@@ -144,7 +150,8 @@ select {
     width: 100%;
     padding: 10px 12px;
     margin: 8px 0;
-    font-size: 11px; /* Small font */
+    font-size: 11px;
+    /* Small font */
     border: 1px solid var(--border-color);
     border-radius: 6px;
     box-sizing: border-box;
@@ -282,39 +289,50 @@ button:disabled {
     }
 
     .open-tab-btn {
-        padding: 6px 15px; /* Smaller padding on smaller screens */
-        font-size: 11px; /* Smaller font size */
-        gap:10px;
+        padding: 6px 15px;
+        /* Smaller padding on smaller screens */
+        font-size: 11px;
+        /* Smaller font size */
+        gap: 10px;
     }
 }
 
 /* Style for the code-panel container */
 .code-panel {
-    position: relative; /* Necessary for absolute positioning inside */
+    position: relative;
+    /* Necessary for absolute positioning inside */
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f4f4f4; /* Editor background */
+    background-color: #f4f4f4;
+    /* Editor background */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     width: 100%;
     padding: 20px;
-    overflow: hidden; /* Prevent overflow if the content overflows */
-    height: auto; /* Allow the container to adjust based on content */
+    overflow: hidden;
+    /* Prevent overflow if the content overflows */
+    height: auto;
+    /* Allow the container to adjust based on content */
 }
 
 /* Style for the code editor textarea */
 /* Code Editor Styling */
 #codeEditor {
     width: 100%;
-    height: 700px; /* Set the height */
-    padding: 10px; /* Padding for text comfort */
-    padding-right: 40px; /* Avoid overlap with scrollbar */
+    height: 700px;
+    /* Set the height */
+    padding: 10px;
+    /* Padding for text comfort */
+    padding-right: 40px;
+    /* Avoid overlap with scrollbar */
     font-size: 12px;
     border: 1px solid #ccc;
     box-sizing: border-box;
-    overflow: auto; /* Enable scrollbars if needed */
-    resize: none; /* Disable resizing */
+    overflow: auto;
+    /* Enable scrollbars if needed */
+    resize: none;
+    /* Disable resizing */
 }
 
 /* Positioning for Copy Button */
@@ -331,27 +349,33 @@ button:disabled {
 /* Style for the textarea */
 #codeEditor {
     width: 100%;
-    height: 700px; /* Adjust height if needed */
+    height: 700px;
+    /* Adjust height if needed */
     padding: 10px;
     font-family: "Courier New", Courier, monospace;
     font-size: 12px;
     line-height: 1.5;
     border: 1px solid #ccc;
     border-radius: 4px;
-    resize: vertical; /* Allows the user to resize the textarea */
-    overflow: auto; /* Ensures scrollbars show when needed */
+    resize: vertical;
+    /* Allows the user to resize the textarea */
+    overflow: auto;
+    /* Ensures scrollbars show when needed */
 }
 
 .copy-btn {
     position: absolute;
-    top: 10px;  /* Adjust the top distance from the container */
-    right: 50px;  /* Decreased right value to move the button a little left */
+    top: 10px;
+    /* Adjust the top distance from the container */
+    right: 50px;
+    /* Decreased right value to move the button a little left */
     background: #333;
     color: white;
     border: none;
     padding: 10px;
     cursor: pointer;
-    z-index: 10; /* Ensure the button stays on top of other elements */
+    z-index: 10;
+    /* Ensure the button stays on top of other elements */
 }
 
 .copy-btn:hover {
@@ -362,22 +386,29 @@ button:disabled {
 .icon-btn {
     background: transparent;
     border: none;
-    position: absolute; /* Position it relative to the code-panel */
-    top: 10px; /* Adjust spacing from the top */
-    right: 60px; /* Decreased right value to move it a little left */
+    position: absolute;
+    /* Position it relative to the code-panel */
+    top: 10px;
+    /* Adjust spacing from the top */
+    right: 60px;
+    /* Decreased right value to move it a little left */
     cursor: pointer;
-    padding: 5px; /* Button padding */
+    padding: 5px;
+    /* Button padding */
     font-size: 50px;
-    color: #420bd8; /* Icon color */
+    color: #420bd8;
+    /* Icon color */
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 5; /* Ensure it stays above other elements */
+    z-index: 5;
+    /* Ensure it stays above other elements */
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .icon-btn i {
-    font-size: 30px; /* Icon size */
+    font-size: 30px;
+    /* Icon size */
 }
 
 .icon-btn:hover {
@@ -392,55 +423,67 @@ button:disabled {
 .refresh-btn {
     background: transparent;
     border: none;
-    position: absolute; /* Position it relative to the code-panel */
-    top: 10px; /* Adjust spacing from the top */
-    right: 120px; /* Decreased right value to move it a little left */
+    position: absolute;
+    /* Position it relative to the code-panel */
+    top: 10px;
+    /* Adjust spacing from the top */
+    right: 120px;
+    /* Decreased right value to move it a little left */
     cursor: pointer;
-    padding: 5px; /* Button padding */
+    padding: 5px;
+    /* Button padding */
     font-size: 50px;
-    color: #420bd8; /* Icon color */
+    color: #420bd8;
+    /* Icon color */
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 5; /* Ensure it stays above other elements */
+    z-index: 5;
+    /* Ensure it stays above other elements */
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* General button styling for open-tab-btn */
 .open-tab-btn {
-    background-color: #343a40; /* Dark background similar to theme-toggle */
+    background-color: #343a40;
+    /* Dark background similar to theme-toggle */
     color: white;
     border: none;
     border-radius: 5px;
     padding: 8px 18px;
-    font-size: 13px; /* Small font */
+    font-size: 13px;
+    /* Small font */
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap:10px;
+    gap: 10px;
 }
 
 /* Add an icon to the open-tab-btn */
 .open-tab-btn i {
-    margin-right: 8px; /* Space between the icon and text */
+    margin-right: 8px;
+    /* Space between the icon and text */
 }
 
 .open-tab-btn:hover {
-    background-color: #495057; /* Slightly lighter on hover */
+    background-color: #495057;
+    /* Slightly lighter on hover */
     transform: scale(1.05);
 }
 
 .open-tab-btn:active {
-    transform: scale(0.95); /* Button shrinks slightly on click */
+    transform: scale(0.95);
+    /* Button shrinks slightly on click */
 }
 
 .open-tab-btn:disabled {
     background-color: #ced4da;
     cursor: not-allowed;
 }
+
 /* Column Input Styling */
 #columnContainer {
     display: flex;
@@ -514,6 +557,7 @@ button:disabled {
     background-color: #ddd;
     cursor: not-allowed;
 }
+
 /* Light Theme Styles */
 .light-theme {
     background-color: #ffffff;
@@ -560,13 +604,15 @@ dark-theme .nav-link.active {
 }
 
 .dark-theme .nav-link:hover {
-    background-color:  #e0e0e0;
+    background-color: #e0e0e0;
 }
+
 dark-theme .nav-link.active {
     background-color: var(--primary-color);
     color: rgb(161, 25, 25);
     font-weight: 600;
 }
+
 .dark-theme .popup-content {
     background-color: #444;
 }
@@ -592,6 +638,7 @@ dark-theme .nav-link.active {
 .copy-modal.show {
     animation: fadeIn 0.3s ease-out, hideModal 3s forwards;
 }
+
 .social-icons {
     position: absolute;
     top: 10px;
@@ -601,52 +648,86 @@ dark-theme .nav-link.active {
 }
 
 .social-icons a {
-    color: #000; /* Change to your preferred color */
-    font-size: 1.5rem; /* Adjust icon size */
+    color: #000;
+    /* Change to your preferred color */
+    font-size: 1.5rem;
+    /* Adjust icon size */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .social-icons a:hover {
-    color: #0077b5; /* Highlight color on hover */
+    color: #0077b5;
+    /* Highlight color on hover */
 }
+
 /* Dark theme hover adjustment */
 .dark-theme .social-icons a:hover {
-    color: #1DA1F2; /* Twitter blue or any other highlight color you prefer */
+    color: #1DA1F2;
+    /* Twitter blue or any other highlight color you prefer */
 }
 
 .dark-theme .social-icons a {
-    color: #eaeaea; /* Set icon color to light gray for dark theme */
+    color: #eaeaea;
+    /* Set icon color to light gray for dark theme */
 }
 
 /* Flexbox container for buttons */
 .button-container {
     display: flex;
-    justify-content: flex-start; /* Align buttons to the left (or center) */
-    gap: 10px; /* Adds space between the buttons */
-    margin-top: 20px; /* Optional: Space above the buttons */
+    justify-content: flex-start;
+    /* Align buttons to the left (or center) */
+    gap: 10px;
+    /* Adds space between the buttons */
+    margin-top: 20px;
+    /* Optional: Space above the buttons */
 }
 
 /* Buy Me A Coffee button styling */
 .buy-me-a-coffee img {
-    width: 120px; /* You can adjust the width to fit your layout */
+    width: 120px;
+    /* You can adjust the width to fit your layout */
     height: auto;
-    border-radius: 5px; /* Slight rounding for aesthetic */
-    transition: transform 0.3s ease; /* Add a smooth hover effect */
-  }
-  
-  .buy-me-a-coffee:hover img {
-    transform: scale(1.05); /* Slight zoom effect on hover */
-  }
-  
-  /* Dark Theme Adjustments */
-  .dark-theme .buy-me-a-coffee img {
-    filter: brightness(0.8); /* Darken the button slightly to match dark theme */
-  }
-  
-  /* Optional: Adding some margin for spacing */
-  .buy-me-a-coffee {
+    border-radius: 5px;
+    /* Slight rounding for aesthetic */
+    transition: transform 0.3s ease;
+    /* Add a smooth hover effect */
+}
+
+.buy-me-a-coffee:hover img {
+    transform: scale(1.05);
+    /* Slight zoom effect on hover */
+}
+
+/* Dark Theme Adjustments */
+.dark-theme .buy-me-a-coffee img {
+    filter: brightness(0.8);
+    /* Darken the button slightly to match dark theme */
+}
+
+/* Optional: Adding some margin for spacing */
+.buy-me-a-coffee {
     margin: 0px 0;
-    display: inline-block; /* Keeps it inline with other content */
-  }
-  
+    display: inline-block;
+    /* Keeps it inline with other content */
+}
+
+/* Style for the suggestion box */
+.autocomplete-suggestions {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    width: 200px;
+    z-index: 1000;
+}
+
+.autocomplete-suggestion {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.autocomplete-suggestion:hover {
+    background-color: #ddd;
+}
