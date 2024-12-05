@@ -1,0 +1,15 @@
+%%[
+    /* Set the number to be formatted */
+    set @price = 1234.7896
+
+    /* Set the locale to Indian English (en-IN) */
+    set @locale = "en-IN"
+
+    /* Set the number of decimal places to round to */
+    set @decimalPlaces = 2
+
+    /* Format the number as currency based on the specified locale and decimal places */
+    set @currency = FormatCurrency(@price, @locale, @decimalPlaces)
+    OutputLine(v(@currency))
+]%%
+

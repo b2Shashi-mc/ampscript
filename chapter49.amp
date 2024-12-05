@@ -1,0 +1,35 @@
+%%[
+    /* Declare variables */
+    var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch, @rowCount, @index, @row
+    var @column1, @column2
+
+    /* Set the name of the data extension to be used */
+    set @dataExtensionName = "My_DataExtension"
+
+    /* Set the attribute to search by in the data extension */
+    set @attributeToSearch = {{attributeToSearch}}
+
+    /* Set the value to search for in the given attribute */
+    set @valueToSearch = {{valueToSearch}}
+
+    /* Use the LookupRows function to fetch all rows that match the search criteria */
+    set @rows = LookupRows(@dataExtensionName, @attributeToSearch, @valueToSearch)
+
+    /* Get the total number of rows returned by the LookupRows function */
+    set @rowCount = RowCount(@rows)
+
+    /* Check if any rows were returned */
+    if @rowCount > 0 then
+        /* Loop through each row and extract values for specified columns */
+        for @index = 1 to @rowCount do
+            set @row = Row(@rows, @index)
+
+            {{columnAssignments}}  
+
+            /* Optionally: you can output these values for debugging or further use */
+            OutputLine(concat({{outputLineColumns}}))
+        next @index
+    else
+        RaiseError("No record found, skipping this send.", true)
+    endif
+]%%
