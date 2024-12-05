@@ -4,9 +4,10 @@
   
   /* Set the filter external ID to get the relevant data */
   set @filterExtId = "a1b2c3d4-56e7-890f-gh12-ijklmnop3456" 
+  set @numberOfRows=0
   
   /* Execute the filter to retrieve rows based on the external ID */
-  set @rows = ExecuteFilter(@filterExtId)
+  set @rows = ExecuteFilterOrderedRows(@filterExtId,@numberOfRows,"{{ColumnToSort}} DESC")
   
   /* Get the number of rows returned by the filter */
   set @rowCount = RowCount(@rows)
