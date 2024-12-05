@@ -245,10 +245,13 @@ document.getElementById("defineColumns").addEventListener("click", function () {
         `;
         columnContainer.appendChild(columnDiv);
 
-
-
+        const colName = document.getElementById(`colName${i}`);
         const dataTypeSelect = document.getElementById(`colType${i}`);
         const maxLengthInput = document.getElementById(`colLength${i}`);
+
+        colName.addEventListener("change", function () {
+            maxLengthInput.value = 50;
+        });
 
         dataTypeSelect.addEventListener("change", function () {
             if (dataTypeSelect.value === "Date" || dataTypeSelect.value === "Number" || dataTypeSelect.value === "Boolean" || dataTypeSelect.value === "Phone" || dataTypeSelect.value === "Locale") {
@@ -378,7 +381,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
             // Validate fields before saving
             let isValid = true;
             let isValidDataType = true;
-            let isValidLength=true;
+            let isValidLength = true;
             for (let i = 1; i < tableRows.length; i++) { // Skip the header row (index 0)
                 const cells = tableRows[i].getElementsByTagName("td");
                 const inputName = cells[0].querySelector("input");
@@ -386,11 +389,19 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                 const inputLength = cells[2].querySelector("input");
 
                 // Check if any input is empty
-                if (!inputName.value || !inputType.value || !inputLength.value) {
+                if (!inputName.value || !inputType.value) {
                     isValid = false;
                     break;
                 }
-                
+
+                if (inputType.value === "Text" && !inputLength.value) {
+                    isValid = false;
+                    break;
+                }
+
+                if (inputType.value === "EmailAddress" && !inputLength.value) {
+                    inputLength.value=254;
+                }
 
                 if (inputType.value !== "Text" && inputType.value !== "Boolean" && inputType.value !== "Number"
                     && inputType.value !== "Date" && inputType.value !== "Locale" && inputType.value !== "Phone"
@@ -631,7 +642,7 @@ function refreshCode() {
 function getActiveChapter() {
     // Find the active link inside the chapter list
     const activeChapterLink = document.querySelector('.chapter-list .nav-link.active');
-    
+
     // Check if there's an active chapter link
     if (activeChapterLink) {
         // Get the data-chapter attribute of the active link
