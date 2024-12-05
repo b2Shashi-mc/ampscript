@@ -401,10 +401,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                     break;
                 }
 
-                if (inputType.value === "EmailAddress" && !inputLength.value) {
-                    inputLength.value=254;
-                }
-
+                
                 if (inputType.value !== "Text" && inputType.value !== "text" 
                     && inputType.value !== "Boolean" && inputType.value !== "boolean"
                     && inputType.value !== "Number" && inputType.value !== "number"
@@ -412,7 +409,8 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                     && inputType.value !== "Locale" && inputType.value !== "locale"
                     && inputType.value !== "Phone" && inputType.value !== "phone"
                     && inputType.value !== "EmailAddress" && inputType.value !== "emailaddress"
-                    && inputType.value !== "emailAddress" && inputType.value !== "email") {
+                    && inputType.value !== "emailAddress" && inputType.value !== "email"&& 
+                    inputType.value !== "Email") {
                     isValidDataType = false;
                     break; // Stop further checks if the data type is invalid
                 }
@@ -433,7 +431,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                     inputType.value = "Phone"
                 }
                 if(inputType.value === "emailaddress" ||inputType.value === "emailAddress"
-                    ||inputType.value === "email"){
+                    ||inputType.value === "email"||inputType.value === "Email"){
                     inputType.value = "EmailAddress"
                 }
 
@@ -441,6 +439,11 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                     isValidLength = false;
                     break;
                 }
+
+                if (inputType.value === "EmailAddress" && !inputLength.value) {
+                    inputLength.value=254;
+                }
+
 
             }
 
