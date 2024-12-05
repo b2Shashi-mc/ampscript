@@ -22,7 +22,7 @@
 <body>
     <header class="page-header">
         <div class="social-icons">
-            
+
             <a href="https://www.linkedin.com/in/sasee-prasad/" target="_blank" title="LinkedIn">
                 <i class="fab fa-linkedin"></i>
             </a>
@@ -45,12 +45,13 @@
                 <i class="fas fa-blog"></i>
             </a>
             <a href="https://www.buymeacoffee.com/b2shashi" target="_blank" class="buy-me-a-coffee">
-                <img src="https://img.buymeacoffee.com/button-api/?username=b2shashi&amp;button_colour=FFDD00&amp;font_colour=000000&amp;font_family=Cookie&amp;outline_colour=000000&amp;coffee_colour=ffffff" alt="Buy Me a Coffee" />
-              </a>
-              
+                <img src="https://img.buymeacoffee.com/button-api/?username=b2shashi&amp;button_colour=FFDD00&amp;font_colour=000000&amp;font_family=Cookie&amp;outline_colour=000000&amp;coffee_colour=ffffff"
+                    alt="Buy Me a Coffee" />
+            </a>
+
         </div>
         <h1>AMPSCRIPTIFY</h1>
-        
+
         <button class="theme-toggle" id="toggleThemeButton">Toggle Theme</button>
         <div class="right-buttons">
             <button class="open-tab-btn" id="ws-proxy">WS-Proxy</button>
@@ -158,6 +159,10 @@
                        
     */
 ]%%</textarea>
+                    <!-- Refresh Button -->
+                    <button id="refreshButton" class="refresh-btn icon-btn" onclick="refreshCode()">
+                        <i class="fa fa-sync-alt"></i> <!-- FontAwesome refresh icon -->
+                    </button>
                     <!-- Copy to Clipboard Button on the Right Side -->
                     <button id="copyButton" class="copy-btn icon-btn" onclick="copyCode()">
                         <i class="fa fa-clipboard"></i> <!-- FontAwesome clipboard icon -->
@@ -178,7 +183,8 @@
         <div class="popup-content">
             <span class="close-btn" id="closeModal">&times;</span>
             <h2>Instructions</h2>
-            <p>To proceed, please enter the number of attributes you'd like to define <strong> (minimum of 3)</strong>, and then click on
+            <p>To proceed, please enter the number of attributes you'd like to define <strong> (minimum of 3)</strong>,
+                and then click on
                 the <strong>"Define Attributes"</strong> button.</p>
             <button id="defineColumnsBtn">Define Attributes</button>
         </div>

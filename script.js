@@ -393,7 +393,8 @@ document.getElementById("generateTableButton").addEventListener("click", functio
                 
 
                 if (inputType.value !== "Text" && inputType.value !== "Boolean" && inputType.value !== "Number"
-                    && inputType.value !== "Date" && inputType.value !== "Locale" && inputType.value !== "Phone") {
+                    && inputType.value !== "Date" && inputType.value !== "Locale" && inputType.value !== "Phone"
+                    && inputType.value !== "EmailAddress") {
                     isValidDataType = false;
                     break; // Stop further checks if the data type is invalid
                 }
@@ -461,8 +462,7 @@ document.getElementById("generateTableButton").addEventListener("click", functio
 
     isTableGenerated = true;
     // Re-fetch and update the content in the editor with new column values
-    loadChapterContent('chapter1');
-    setActiveChapterLink('chapter1');
+    refreshCode();
 });
 
 
@@ -622,4 +622,21 @@ document.getElementById('ampscript').addEventListener('click', function () {
     window.open('https://b2shashi-mc.github.io/ampscript-soap-api/', '_blank');
 });
 
+function refreshCode() {
+    // Reset the content of the code editor
+    loadChapterContent(getActiveChapter());
+    setActiveChapterLink(getActiveChapter());
+}
 
+function getActiveChapter() {
+    // Find the active link inside the chapter list
+    const activeChapterLink = document.querySelector('.chapter-list .nav-link.active');
+    
+    // Check if there's an active chapter link
+    if (activeChapterLink) {
+        // Get the data-chapter attribute of the active link
+        return activeChapterLink.getAttribute('data-chapter');
+    } else {
+        return null; // No active chapter
+    }
+}

@@ -364,7 +364,7 @@ button:disabled {
     border: none;
     position: absolute; /* Position it relative to the code-panel */
     top: 10px; /* Adjust spacing from the top */
-    right: 50px; /* Decreased right value to move it a little left */
+    right: 60px; /* Decreased right value to move it a little left */
     cursor: pointer;
     padding: 5px; /* Button padding */
     font-size: 50px;
@@ -387,6 +387,23 @@ button:disabled {
 
 .icon-btn:active {
     transform: scale(0.95);
+}
+
+.refresh-btn {
+    background: transparent;
+    border: none;
+    position: absolute; /* Position it relative to the code-panel */
+    top: 10px; /* Adjust spacing from the top */
+    right: 120px; /* Decreased right value to move it a little left */
+    cursor: pointer;
+    padding: 5px; /* Button padding */
+    font-size: 50px;
+    color: #420bd8; /* Icon color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5; /* Ensure it stays above other elements */
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* General button styling for open-tab-btn */
