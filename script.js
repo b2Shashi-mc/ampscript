@@ -75,6 +75,7 @@ function replacePlaceholders(content, chapterName) {
         case 'chapter3':
         case 'chapter47':
         case 'chapter48':
+        case 'chapter49':
             // Replace specific placeholders like {{attributeToSearch}} and {{valueToSearch}}
             content = content.replace(/{{attributeToSearch}}/g, columns[0] ? `"${columns[0].name}"` : '""');
             content = content.replace(/{{valueToSearch}}/g, columns[2] ? '""' : '""');
@@ -577,7 +578,7 @@ document.getElementById('chapterSearch').addEventListener('input', function () {
 
 // Show the popup modal when the page loads
 window.onload = function () {
-    // document.getElementById('popupModal').style.display = 'block';
+    showPopup();
     document.getElementById('numColumns').focus();
 };
 
@@ -681,3 +682,18 @@ function getActiveChapter() {
         return null; // No active chapter
     }
 }
+
+// Get the popup element and the close button
+const popup = document.getElementById('notebookPopup');
+const closePopupButton = document.getElementById('closePopup');
+
+// Open the popup (for testing, you can call this function when needed)
+function showPopup() {
+  popup.style.display = 'flex';
+}
+
+// Close the popup when the close button is clicked
+closePopupButton.onclick = function() {
+  popup.style.display = 'none';
+};
+

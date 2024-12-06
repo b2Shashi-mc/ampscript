@@ -54,17 +54,24 @@ body {
     margin-bottom: 60px;
 }
 
+ .right-buttons{
+    position: absolute;
+    right: 150px;
+    top: 10px;
+ }
+
+ .open-tab-btn{
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+ }
 /* Theme Toggle Button */
 .theme-toggle {
     position: absolute;
     right: 15px;
     top: 10px;
-    background: var(--light-bg);
-    color: var(--primary-color);
-    border: none;
-    padding: 8px 12px;
+    padding: 5px 12px;
     cursor: pointer;
-    border-radius: 20px;
     font-size: 11px;
     font-weight: 500;
     transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
@@ -274,7 +281,42 @@ button:disabled {
     cursor: pointer;
 }
 
+
+
 /* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .left-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-top: 70px;
+        padding: 20px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .page-header {
+        font-size: 14px;
+        padding-left: 50px;
+    }
+
+    .theme-toggle {
+        font-size: 12px;
+    }
+    .right-buttons {
+        display: none !important;
+    }
+
+    /* Hide theme toggle for smaller screens */
+    .theme-toggle {
+        display: none;
+    }
+}
+
+/* Responsive adjustments for smaller screens (max-width 768px) */
 @media (max-width: 768px) {
     .left-navigation {
         width: 100%;
@@ -288,12 +330,182 @@ button:disabled {
         margin-left: 0;
     }
 
-    .open-tab-btn {
-        padding: 6px 15px;
-        /* Smaller padding on smaller screens */
+    .page-header {
+        font-size: 14px;
+        padding-left: 50px;
+    }
+
+    .theme-toggle {
+        font-size: 12px;
+        position: relative;
+        top: 0;
+        right: 0;
+    }
+
+    .right-buttons {
+        display: none;
+    }
+
+    /* Hide theme toggle for smaller screens */
+    .theme-toggle {
+        display: none;
+    }
+    .social-icons {
+        display: none !important;
+    }
+}
+
+/* Mobile-First Adjustments */
+@media (max-width: 480px) {
+    body {
+        font-size: 10px;
+    }
+
+    .page-header {
+        font-size: 12px;
+        padding-left: 40px;
+    }
+
+    .left-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-top: 70px;
+        padding: 10px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .nav-link {
+        padding: 8px 12px;
+        font-size: 9px;
+    }
+
+    .theme-toggle {
+        font-size: 10px;
+        padding: 6px;
+    }
+
+
+    .column-input {
+        padding: 10px;
+    }
+
+    .column-input label {
+        font-size: 12px;
+    }
+
+    .column-input input,
+    .column-input select {
         font-size: 11px;
-        /* Smaller font size */
-        gap: 10px;
+    }
+
+    .column-input button {
+        font-size: 12px;
+    }
+
+    /* Adjusting button container to be more mobile-friendly */
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Adjust the social icons */
+    .social-icons {
+        display: none;
+    }
+
+    .social-icons a {
+        font-size: 1.2rem;
+    }
+
+    .copy-btn,
+    .icon-btn,
+    .refresh-btn {
+        font-size: 40px;
+    }
+    .right-buttons {
+        display: none;
+    }
+}
+
+/* Mobile-First Adjustments */
+@media (max-width: 412px) {
+    body {
+        font-size: 10px;
+    }
+
+    .page-header {
+        font-size: 12px;
+        padding-left: 40px;
+    }
+
+    .left-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-top: 70px;
+        padding: 10px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .nav-link {
+        padding: 8px 12px;
+        font-size: 9px;
+    }
+
+    .theme-toggle {
+        font-size: 10px;
+        padding: 6px;
+    }
+
+
+    .column-input {
+        padding: 10px;
+    }
+
+    .column-input label {
+        font-size: 12px;
+    }
+
+    .column-input input,
+    .column-input select {
+        font-size: 11px;
+    }
+
+    .column-input button {
+        font-size: 12px;
+    }
+
+    /* Adjusting button container to be more mobile-friendly */
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Adjust the social icons */
+    .social-icons {
+        display: none;
+    }
+
+    .social-icons a {
+        font-size: 1.2rem;
+    }
+
+    .copy-btn,
+    .icon-btn,
+    .refresh-btn {
+        font-size: 40px;
+    }
+    .right-buttons {
+        display: none;
     }
 }
 
@@ -443,46 +655,6 @@ button:disabled {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* General button styling for open-tab-btn */
-.open-tab-btn {
-    background-color: #343a40;
-    /* Dark background similar to theme-toggle */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 18px;
-    font-size: 13px;
-    /* Small font */
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* Add an icon to the open-tab-btn */
-.open-tab-btn i {
-    margin-right: 8px;
-    /* Space between the icon and text */
-}
-
-.open-tab-btn:hover {
-    background-color: #495057;
-    /* Slightly lighter on hover */
-    transform: scale(1.05);
-}
-
-.open-tab-btn:active {
-    transform: scale(0.95);
-    /* Button shrinks slightly on click */
-}
-
-.open-tab-btn:disabled {
-    background-color: #ced4da;
-    cursor: not-allowed;
-}
 
 /* Column Input Styling */
 #columnContainer {
@@ -730,4 +902,215 @@ dark-theme .nav-link.active {
 
 .autocomplete-suggestion:hover {
     background-color: #ddd;
+}
+
+/* Font Import for Professional Look */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+/* Popup Styling */
+.notebook-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* More transparent overlay for a lighter background */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: 'Roboto', sans-serif;
+  transition: opacity 0.3s ease-in-out, background 0.3s ease; /* Smooth background transition */
+}
+
+/* Book Container */
+.book-container {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  height: 80%;
+  background: linear-gradient(145deg, rgba(46, 59, 78, 0.8), rgba(28, 38, 50, 0.8)); /* Semi-transparent gradient */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2); /* Lighter shadow */
+  position: relative;
+  transition: transform 0.3s ease-in-out; /* Added subtle animation for transitions */
+}
+
+/* Page Styling */
+.book-page {
+  width: 50%;
+  padding: 25px; /* Adjusted padding */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-height: 100%;
+  overflow-y: auto;
+  backdrop-filter: blur(5px); /* Slightly stronger blur for a more elegant effect */
+  font-family: 'Roboto', sans-serif; 
+}
+
+/* Left Page: Soft Blue */
+.book-page.left-page {
+  background: linear-gradient(135deg, rgba(204, 231, 255, 0.8), rgba(166, 199, 255, 0.8)); /* Semi-transparent soft blue gradient */
+  border-right: 1px solid rgba(0, 0, 0, 0.1); 
+  color: #1a3c55; 
+}
+
+/* Right Page: Soft White */
+.book-page.right-page {
+  background: rgba(249, 249, 249, 0.9); /* Slightly transparent off-white */
+  color: #333333; 
+}
+
+/* Book Spine */
+.book-spine {
+  width: 18px; /* Slightly thicker for a more prominent look */
+  background: linear-gradient(145deg, rgba(31, 42, 54, 0.8), rgba(46, 59, 78, 0.8)); /* Semi-transparent spine */
+  margin: 0 10px;
+  position: relative;
+}
+
+/* Title Styling */
+.page-title {
+  font-size: 20px; /* Further reduced font size for title */
+  font-weight: 700;
+  margin-bottom: 15px; /* Adjusted spacing */
+  text-align: left;
+  letter-spacing: 1px;
+  font-family: 'Playfair Display', serif;
+  color: rgba(29, 77, 105, 0.9); /* Dark teal with slight transparency for titles */
+  transition: color 0.3s ease-in-out; /* Smooth color transition */
+}
+
+.page-title:hover {
+  color: rgba(74, 193, 212, 0.9); /* Accent color with slight transparency on hover */
+}
+
+/* Page Content */
+.page-content {
+  font-size: 14px; /* Further reduced font size for content */
+  line-height: 1.8; /* Improved line-height for text legibility */
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif; 
+}
+
+.left-page .page-content {
+  color: rgba(26, 60, 85, 0.9); /* Soft transparent color */
+}
+
+.right-page .page-content {
+  color: rgba(51, 51, 51, 0.9); /* Darker text with transparency */
+}
+
+.page-content strong {
+  font-weight: bold;
+  color: rgba(113, 216, 232, 0.9); /* Accent color for emphasis with transparency */
+  font-family: 'Playfair Display', serif; 
+}
+
+/* Step List */
+.step-list {
+  font-size: 14px; /* Further reduced font size for steps */
+  list-style-type: decimal;
+  padding-left: 25px; /* Adjusted padding for cleaner alignment */
+  margin-top: 20px;
+}
+
+.step-list li {
+  margin-bottom: 15px; /* Slightly larger spacing */
+  font-family: 'Roboto', sans-serif;
+}
+
+.step-list strong {
+  color: rgba(74, 193, 212, 0.9); /* Transparent accent color for strong text */
+  font-family: 'Playfair Display', serif; 
+}
+
+/* Close Button */
+.btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px; /* Further reduced font size for close button */
+  color: rgba(51, 51, 51, 0.9); /* Slightly transparent color for the close button */
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s ease, transform 0.2s ease;
+  font-family: 'Roboto', sans-serif; 
+}
+
+.btn-close:hover {
+  color: rgba(74, 193, 212, 0.9); /* Accent color with transparency on hover */
+  transform: scale(1.2); /* Subtle zoom effect */
+}
+
+/* Coffee Button Container */
+.coffee-button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .book-container {
+    width: 90%;
+    height: 85%;
+  }
+
+  .page-title {
+    font-size: 18px; /* Reduced font size for smaller screens */
+  }
+
+  .page-content {
+    font-size: 12px; /* Further reduced font size for better fit on mobile */
+  }
+
+  .step-list {
+    font-size: 12px; /* Smaller font size for steps on mobile */
+  }
+
+  .btn-close {
+    font-size: 22px;
+    top: 15px;
+    right: 15px;
+  }
+}
+
+/* Page Description */
+.page-description {
+    font-size: 12px; /* Further reduced font size for description */
+    line-height: 1.8; /* Improved line-height for better readability */
+    margin-top: 20px; /* Space between title and description */
+    margin-bottom: 20px; /* Space after the description */
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    color: rgba(51, 51, 51, 0.9); /* Slightly transparent color for descriptions */
+}
+
+.author-signature {
+    margin-top: 20px;
+    text-align: left;
+    font-style: italic;
+}
+
+.author-signature img.signature-image {
+    width: 150px; /* Adjust the size of the signature */
+    margin-top: 10px;
+}
+.social-media-links a {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+.social-media-links a:hover {
+    color: #0073b1; /* LinkedIn blue */
+}
+.social-media-links a:last-child:hover {
+    color: #FF0000; /* YouTube red */
 }
