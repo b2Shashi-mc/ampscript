@@ -150,7 +150,7 @@
                 <div class="table-panel">
                     <h3>Data Extension</h3>
                     <form id="columnForm">
-                        <input type="number" id="numColumns" placeholder="Number of Attributes" min="1" required>
+                        <input type="number" id="numColumns" placeholder="Number of Attributes (minimum of 3)" min="1" required>
                         <button type="button" id="defineColumns">Define Attributes</button>
                     </form>
                     <div id="columnContainer"></div>
@@ -169,20 +169,22 @@
 
                     <textarea id="codeEditor" name="code" rows="80" cols="50">
 %%[
-    /*
+/*
+    Welcome to AMPSCRIPTIFY!
+    
+    Get ready to generate dynamic and efficient AMPscript code in just a few steps.
 
-    Welcome to AMPSCRIPTIFY
-                       
-    Let's start generating ampscript code
+    Here's how to get started:
+    1. Specify the number of attributes you want to include (minimum: 3).
+    2. Click the "Define Attributes" button to proceed.
+    3. Provide details for each attribute, such as "SubscriberKey," "FirstName," "LastName," etc.
+    4. Click "Generate Table" to create a Data Extension tailored to your needs.
+    5. Use the left navigation menu to select the AMPscript function you'd like to generate.
+    6. Customize the Data Extension name and attributes to align with your specific use case.
+    7. Copy the generated AMPscript code and test it to ensure it meets your requirements.
 
-    Follow these steps:
-    1. Enter the number of attributes you'd like to include (minimum of 3).
-    2. Click the "Define Attributes" button.
-    3. Fill in the details for each attribute.
-    4. Click "Generate Table" to create your Data Extension.
-    5. From the left navigation, select the ampscript function to generate the code
-                       
-    */
+    Let's bring your ideas to life with AMPscriptify!
+*/
 ]%%</textarea>
                     <!-- Refresh Button -->
                     <button id="refreshButton" class="refresh-btn icon-btn" onclick="refreshCode()">
