@@ -1,10 +1,5 @@
 %%[
     /* 
-       This script retrieves a specific value from a Data Extension 
-       using the LookUp function. It searches for a record in the 
-       Data Extension based on a given attribute and value, then 
-       fetches the desired attribute's value for the matching record.
-
        Steps:
        1. Define the Data Extension name, the attribute to fetch, 
           the attribute to search by, and the value to search for.

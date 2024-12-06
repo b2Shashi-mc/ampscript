@@ -1,7 +1,14 @@
 %%[
+    /* 
+       Steps:
+       1. Specify the Data Extension name, search attribute, and search value.
+       2. Use the LookupRows function to retrieve matching rows.
+       3. Determine the number of rows returned.
+       4. Loop through the rows to extract and optionally output column values.
+    */
+
     /* Declare variables */
     var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch, @rowCount, @index, @row
-    var @column1, @column2
 
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"

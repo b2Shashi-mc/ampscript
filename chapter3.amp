@@ -1,7 +1,14 @@
 %%[
+    /* 
+       Steps:
+       1. Specify the Data Extension name, search attribute, and case-sensitive search value.
+       2. Use LookupRowsCS to retrieve rows that match the criteria.
+       3. Get the total number of matching rows.
+       4. Loop through each row to extract and optionally display column values.
+    */
+
     /* Declare variables */
     var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch, @rowCount, @index, @row
-    var @column1, @column2
 
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"

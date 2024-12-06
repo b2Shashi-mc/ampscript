@@ -1,16 +1,27 @@
 %%[
+    /* 
+       Steps:
+       1. Specify the Data Extension name, search attribute, search value, 
+          and column to sort by.
+       2. Use DataExtensionRowCount to determine the total number of rows 
+          in the Data Extension.
+       3. Use LookupOrderedRowsCS to retrieve rows that match the specified 
+          search criteria, sorted by the specified column in descending order.
+       4. Loop through each row to extract and optionally display values 
+          from specified columns.
+    */
+
     /* Declare variables */
     var @rows, @dataExtensionName, @attributeToSearch, @valueToSearch, @rowCount, @index, @row
     var @numberOfRows, @sortColumn
-    var @column1, @column2
 
     /* Set the name of the data extension to be used */
     set @dataExtensionName = "My_DataExtension"
 
-    /* Set the attribute to search by in the data extension (will be dynamically replaced) */
+    /* Set the attribute to search by in the data extension */
     set @attributeToSearch = {{attributeToSearch}}
 
-    /* Set the value to search for in the given attribute (will be dynamically replaced) */
+    /* Set the value to search for in the given attribute */
     set @valueToSearch = {{valueToSearch}}
 
     /* Set the attribute by which the results will be sorted */
@@ -19,8 +30,8 @@
     /* Get the total number of rows in the data extension */
     set @numberOfRows = DataExtensionRowCount(@dataExtensionName)
 
-    /* Use the LookupOrderedRows function to fetch rows ordered by 
-    the specified column and sorted in descending order */
+    /* Use the LookupOrderedRowsCS function to fetch rows ordered by 
+       the specified column and sorted in descending order */
     set @rows = LookupOrderedRowsCS(@dataExtensionName, @numberOfRows, 
                                   concat(@sortColumn, " DESC"), @attributeToSearch, @valueToSearch)
 
