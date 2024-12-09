@@ -1,0 +1,40 @@
+%%[
+    /* Variable Declarations */
+    /* Define your Client ID and Client Secret provided by Salesforce Marketing Cloud */
+    SET @clientId = "YOUR_CLIENT_ID" /* Replace with your actual Client ID */
+    SET @clientSecret = "YOUR_CLIENT_SECRET" /* Replace with your actual Client Secret */
+
+    /* Define the Authentication Endpoint for your Marketing Cloud account */
+    SET @authEndpoint = "https://YOUR_SUBDOMAIN.auth.marketingcloudapis.com/v2/token" /* Replace 'YOUR_SUBDOMAIN' with your actual subdomain */
+
+    /* Define the payload for the authentication request in JSON format */
+    SET @payload = Concat(
+                        '{
+                            "client_id": "',@clientId,'", 
+                            "client_secret": "',@clientSecret,'", 
+                            "grant_type": "client_credentials"
+                        }'
+                        )
+
+    /* Send an HTTP POST request to the Authentication Endpoint with the payload */
+    HTTPPost2(@authEndpoint, "application/json", @payload, true, @response, @callstatus)
+
+    /* Parse the JSON response into a rowset for easier handling */
+    SET @rowset = BuildRowsetFromJson(@response, '$.*', 1) 
+
+    /* Extract the first row from the rowset to get individual fields */
+    SET @row = Row(@rowset, 1) 
+
+    /* Retrieve the 'Value' field from the first row, which is the Access Token */
+    SET @accessToken = FIELD(@row, 'Value')
+
+    /* Extract the second row to get the token type */
+    SET @row = Row(@rowset, 2) 
+    SET @tokentype = FIELD(@row, 'Value')
+
+    /* Combine the token type and access token to create the Authorization header */
+    SET @authorization = Concat(@tokentype, ' ', @accessToken)
+]%%
+
+/* Output the Authorization header for verification */
+%%=v(@authorization)=%%

@@ -1,0 +1,106 @@
+
+<script runat="server">
+  Platform.Load('core', '1');
+  var method = Platform.Request.Method;
+  Variable.SetValue("@method", method);
+</script>
+
+%%[
+    /* 
+        AMPscript to trigger a transactional email send using a specified 
+        Triggered Send Definition with personalization attributes and log the subscriber.
+    */
+
+    /* Variable Declarations */
+    var @emailAddress, @fullName, @subscriberKey, @CompanyName, @Industry, @CompanySize, @triggeredSend, @triggeredSendDefinition, @subscriber, @statusCode, @statusMessage, @errorCode, @logDataExtensionName, @logStatus, @redirectURL
+
+    /* 
+        Assign values for personalization and email address from request parameters.
+    */
+    SET @emailAddress = RequestParameter("email")
+    SET @fullName = RequestParameter("name")
+    SET @CompanyName = RequestParameter("company")
+    SET @Industry = RequestParameter("industry")
+    SET @CompanySize = RequestParameter("size")
+    SET @subscriberKey = GUID() /* Generate a unique SubscriberKey */
+
+    /* Check if the request method is "POST" */
+    IF @method == "POST" THEN
+
+        /* 
+            Create Triggered Send Objects:
+            - @triggeredSend: TriggeredSend object to handle the triggered email send.
+            - @triggeredSendDefinition: TriggeredSendDefinition object to specify the email definition.
+        */
+        SET @triggeredSend = CreateObject("TriggeredSend")
+        SET @triggeredSendDefinition = CreateObject("TriggeredSendDefinition")
+
+        /* 
+            Specify the CustomerKey for the Triggered Send Definition.
+            This should match the CustomerKey in the Marketing Cloud setup.
+        */
+        SET @tsCustomerKey = "SMB_Sign_Up_Confirmation"
+        SetObjectProperty(@triggeredSendDefinition, "CustomerKey", @tsCustomerKey)
+
+        /* 
+            Associate the TriggeredSendDefinition object with the TriggeredSend object.
+        */
+        SetObjectProperty(@triggeredSend, "TriggeredSendDefinition", @triggeredSendDefinition)
+
+        /* 
+            Create and configure the Subscriber object with the email address and personalization attributes.
+        */
+        SET @subscriber = CreateObject("Subscriber")
+        SetObjectProperty(@subscriber, "EmailAddress", @emailAddress)
+        SetObjectProperty(@subscriber, "SubscriberKey", @subscriberKey)
+        
+
+        /* 
+            Add custom attributes to the Subscriber object.
+            For example, adding FullName and other attributes.
+        */
+        /* FullName Attribute */
+        SET @attr = CreateObject("Attribute")
+        SetObjectProperty(@attr, "Name", "FullName")
+        SetObjectProperty(@attr, "Value", @fullName)
+        AddObjectArrayItem(@subscriber, "Attributes", @attr)
+
+
+        /* 
+            Add the configured Subscriber object to the TriggeredSend's subscriber list.
+        */
+        AddObjectArrayItem(@triggeredSend, "Subscribers", @subscriber)
+
+        /* 
+            Invoke the TriggeredSend to send the email, and capture the status and any errors.
+        */
+        SET @statusCode = InvokeCreate(@triggeredSend, @statusMessage, @errorCode)
+
+        /* 
+            Log the subscriber details and the status of the send operation.
+        */
+        SET @logDataExtensionName = "SMB_Subscribers" /* Replace with your logging data extension name */
+        SET @logStatus = InsertData(@logDataExtensionName, "EmailAddress", @emailAddress, "SubscriberKey", @subscriberKey, "FullName", @fullName, "CompanyName", @CompanyName, "Industry", @Industry, "CompanySize", @CompanySize)
+
+        /* 
+            Error Handling:
+            - If the TriggeredSend did not return a status code of "OK", raise an error.
+            - This helps in identifying and troubleshooting issues during the send process.
+        */
+        IF @statusCode == "OK" THEN
+            /* Set the redirect URL if the send is successful */
+            Redirect("confirmation_cloudpage_url")
+        ELSE
+            Redirect("errorpage_cloudpage_url")
+        ENDIF
+    ENDIF
+
+    /*
+        End of AMPscript.
+    */
+]%%
+
+
+
+                                    
+                                                            

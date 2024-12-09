@@ -1,0 +1,32 @@
+%%[
+        /* Retrieve rows from the "PhoneNumber_Update" data extension where the column "IsUpdated" is 0.
+           The rows are ordered by "NewMobileNumber" in descending order. 
+           The total count of rows is dynamically determined using the DataExtensionRowCount function. */
+        SET @rows = LookupOrderedRows("PhoneNumber_Update", DataExtensionRowCount("PhoneNumber_Update"), "NewMobileNumber desc", "IsUpdated", 0)
+
+        /* Get the number of rows retrieved from the "PhoneNumber_Update" data extension. */
+        SET @rowCount = RowCount(@rows)
+
+        /* Check if there are any rows to process (i.e., @rowCount is greater than 0). */
+        IF @rowCount > 0 THEN
+
+            /* Loop through each row in the retrieved data set. */
+            FOR @i = 1 TO @rowCount DO
+
+                /* Retrieve the current row data based on the loop index. */
+                SET @row = ROW(@rows, @i) 
+
+                /* Extract the "ContactID" and "NewMobileNumber" values from the current row. */
+                SET @ContactID = field(@row, "ContactID")
+                SET @NewMobileNumber = field(@row, "NewMobileNumber")
+
+                /* Update the '_MobileAddress' data extension with the new mobile number
+                   for the corresponding ContactID. */
+                UpdateData('_MobileAddress', 1, '_ContactID', @ContactID, '_MobileNumber', @NewMobileNumber)
+
+                /* Mark the record in the "PhoneNumber_Update" data extension as updated
+                   by setting the "IsUpdated" field to 1 for the processed ContactID. */
+                UpdateData('PhoneNumber_Update', 1, 'ContactID', @ContactID, 'IsUpdated', 1)
+            NEXT @i /* Move to the next record in the loop. */
+        ENDIF /* End of the condition to check if there are rows to process. */
+]%%

@@ -1,0 +1,60 @@
+
+%%[
+    /* Retrieve the SubscriberKey and JobID from the query parameters */
+    SET @subscriberKey = AttributeValue("_subscriberkey") /* Subscriber key */
+    SET @jobId = AttributeValue("jobid") /* Job ID */
+
+    /* Define the reason for unsubscribing */
+    SET @unsubscribeReason = "Profile Center Unsubscribe" /* Unsubscribe reason */
+
+    /* Create a SOAP API ExecuteRequest object for the LogUnsubEvent utility function */
+    SET @executeRequest = CreateObject("ExecuteRequest") /* SOAP API request */
+
+    /* Set the name of the utility function to LogUnsubEvent */
+    SetObjectProperty(@executeRequest, "Name", "LogUnsubEvent") /* Name of the SOAP method */
+
+    /* Create and configure a SOAP API Property object for SubscriberKey */
+    SET @subscriberKeyProperty = CreateObject("APIProperty") /* Property object for SubscriberKey */
+    SetObjectProperty(@subscriberKeyProperty, "Name", "SubscriberKey") /* Name: SubscriberKey */
+    SetObjectProperty(@subscriberKeyProperty, "Value", @subscriberKey) /* Value: retrieved SubscriberKey */
+    /* Add the SubscriberKey property to the Parameters array in the SOAP request */
+    AddObjectArrayItem(@executeRequest, "Parameters", @subscriberKeyProperty)
+
+    /* Create and configure a SOAP API Property object for JobID */
+    SET @jobIdProperty = CreateObject("APIProperty") /* Property object for JobID */
+    SetObjectProperty(@jobIdProperty, "Name", "JobID") /* Name: JobID */
+    SetObjectProperty(@jobIdProperty, "Value", @jobId) /* Value: retrieved JobID */
+    /* Add the JobID property to the Parameters array in the SOAP request */
+    AddObjectArrayItem(@executeRequest, "Parameters", @jobIdProperty)
+
+    /* Create and configure a SOAP API Property object for the Unsubscribe Reason */
+    SET @reasonProperty = CreateObject("APIProperty") /* Property object for Unsubscribe Reason */
+    SetObjectProperty(@reasonProperty, "Name", "Reason") /* Name: Reason */
+    SetObjectProperty(@reasonProperty, "Value", @unsubscribeReason) /* Value: predefined reason */
+    /* Add the Reason property to the Parameters array in the SOAP request */
+    AddObjectArrayItem(@executeRequest, "Parameters", @reasonProperty)
+
+    /* Invoke the SOAP API function to log the unsubscribe event */
+    SET @executionStatus = InvokeExecute(@executeRequest, @overallStatus, @requestId) /* Execute the request */
+
+    /* Retrieve the first row from the execution status response */
+    SET @responseRow = Row(@executionStatus, 1) /* Get the first response row */
+    /* Retrieve status message and error code from the response */
+    SET @statusMessage = Field(@responseRow, "StatusMessage") /* Status message from response */
+    SET @errorCode = Field(@responseRow, "ErrorCode") /* Error code from response */
+
+    /* Log the details of the unsubscribe operation in a Data Extension */
+    SET @logDataExtensionName = "ExecuteRequest" /* Replace with your actual Data Extension name */
+    SET @logStatus = InsertData(
+        @logDataExtensionName, 
+        "StatusMessage", @statusMessage, 
+        "ErrorCode", @errorCode, 
+        "overallStatus", @overallStatus, 
+        "SubscriberKey", @subscriberKey, 
+        "requestId", @requestId
+    ) /* Log the details in the specified Data Extension */
+]%%
+
+
+
+                            

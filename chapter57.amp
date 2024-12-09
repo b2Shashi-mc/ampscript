@@ -1,0 +1,67 @@
+%%[
+    /* Variable Declarations */
+    /* Define credentials and endpoints */
+    SET @clientId = "YOUR_CLIENT_ID" /* Replace with your actual Client ID */
+    SET @clientSecret = "YOUR_CLIENT_SECRET" /* Replace with your actual Client Secret */
+    SET @authEndpoint = "https://YOUR_SUBDOMAIN.auth.marketingcloudapis.com/v2/token" /* Authentication endpoint */
+    SET @journeyEndpoint = "https://YOUR_SUBDOMAIN.rest.marketingcloudapis.com/interaction/v1/events" /* Journey API endpoint */
+
+    /* Subscriber Information */
+    SET @SubscriberKey = "YOUR_SUBSCRIBER_KEY" /* Replace with the subscriber's unique key */
+    SET @FullName = "FULL NAME" /* Replace with the subscriber's full name */
+    SET @EmailAddress = "SUBSCRIBER_EMAIL" /* Replace with the subscriber's email address */
+    SET @Subject = "SUBJECT" /* Replace with the message subject */
+    SET @Message = "Hello, How are you" /* Replace with the message content */
+
+    /* Journey Information */
+    SET @Journey_API_Key = "YOUR_JOURNEY_API_KEY" /* Replace with the Event Definition Key for your journey */
+    SET @EstablishContactKey = "True" /* Indicates whether to establish the contact key */
+
+    /* Define the payload for authentication */
+    SET @payload = Concat(
+        '{
+            "client_id": "', @clientId, '",
+            "client_secret": "', @clientSecret, '",
+            "grant_type": "client_credentials"
+        }'
+    )
+   
+    /* Make API call to get an access token */
+    HTTPPost2(@authEndpoint, "application/json", @payload, true, @response, @callstatus)
+
+    /* Parse the response to extract the access token */
+    SET @rowset = BuildRowsetFromJson(@response, '$.*', 1) /* Convert the response JSON to a rowset */
+    SET @row = Row(@rowset, 1) /* Get the first row */
+    SET @accessToken = FIELD(@row, 'Value') /* Extract the access token from the response */
+    SET @row = Row(@rowset, 2) /* Get the second row */
+    SET @tokentype = FIELD(@row, 'Value') /* Extract the token type from the response */
+    SET @authorization = Concat(@tokentype, ' ', @accessToken) /* Combine token type and access token */
+
+    /* Construct the JSON Payload for the Journey API */
+    SET @content = CONCAT(
+        '{
+            "ContactKey": "', @SubscriberKey, '", 
+            "EventDefinitionKey": "', @Journey_API_Key, '", 
+            "EstablishContactKey": "', @EstablishContactKey, '",
+            "Data": {
+                "SubscriberKey": "', @SubscriberKey, '", 
+                "EmailAddress": "', @EmailAddress, '", 
+                "FullName": "', @FullName, '", 
+                "Message": "', @Message, '", 
+                "Subject": "', @Subject, '"
+            }
+        }'
+    )
+
+    /* Make API Call to Trigger the Journey */
+    SET @returnValid = HTTPPost2(
+        @journeyEndpoint, 
+        "application/json; charset=UTF-8", 
+        @content, 
+        False, 
+        @output, 
+        @respheader, 
+        "Authorization", 
+        @authorization
+    )
+]%%

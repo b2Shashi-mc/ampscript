@@ -1,0 +1,44 @@
+
+ %%[
+    /* Assign values for SubscriberKey and EmailAddress */
+    SET @subscriberKey = AttributeValue("_subscriberkey") 
+    SET @emailAddress = AttributeValue("emailaddr")
+
+    /* Create a new Subscriber object */
+    SET @subscriberObject = CreateObject("Subscriber")
+    SetObjectProperty(@subscriberObject, "EmailAddress", @emailAddress)
+    SetObjectProperty(@subscriberObject, "SubscriberKey", @subscriberKey)
+    /* Set the status of the subscriber to Unsubscribed */
+    SetObjectProperty(@subscriberObject, "Status", "Active")
+    
+    /* Create a new ClientID object */
+    SET @clientIdObject = CreateObject("ClientID")
+    SetObjectProperty(@clientIdObject, "ID", AuthenticatedMemberID())
+    SetObjectProperty(@clientIdObject, "IDSpecified", "true")
+    
+    /* Associate the ClientID object with the Subscriber */
+    SetObjectProperty(@subscriberObject, "Client", @clientIdObject)
+    
+    /* Define Update Options */
+    SET @updateOptions = CreateObject("UpdateOptions")
+    SET @saveOption = CreateObject("SaveOption")
+    SetObjectProperty(@saveOption, "SaveAction", "UpdateAdd")
+    SetObjectProperty(@saveOption, "PropertyName", "*")
+    AddObjectArrayItem(@updateOptions, "SaveOptions", @saveOption)
+    
+    /* Update the Subscriber object */
+    SET @updateStatus = InvokeUpdate(@subscriberObject, @updateStatusMessage, @updateErrorCode, @updateOptions)
+    
+    /* Log the subscriber details and status of the update operation */
+    SET @logDataExtensionName = "InvokeUpdate" /* Replace with your logging data extension name */
+    SET @logStatus = InsertData(
+        @logDataExtensionName, 
+        "updateStatus", @updateStatus, 
+        "updateStatusMessage", @updateStatusMessage, 
+        "updateErrorCode", @updateErrorCode, 
+        "subscriberKey", @subscriberKey, 
+        "emailAddress", @emailAddress
+    )
+]%%
+
+                                
