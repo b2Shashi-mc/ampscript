@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>Welcome to Limedash Corporation</title>
+</head>
+<body>
+    <h1>Hello %%=v(@FirstName)=%%,</h1>
+    <p>Welcome to %%member_busname%%! We're excited to have you on board. You're now part of an exclusive community of customers who enjoy premium services and offers. Below are some important details you should know:</p>
+
+    <p><strong>Today's date is %%xtmonth%% %%xtday%%, %%xtyear%%.</strong></p>
+    
+    <p>As a new member, you'll receive exclusive updates, promotions, and personalized offers. We look forward to serving you!</p>
+
+    <h2>Your Account Details</h2>
+    <p><strong>Username:</strong> %%=v(@EmailAddress)=%%</p>
+    <p>If you need assistance, please feel free to reach out to our support team.</p>
+
+    <p>If you are having trouble viewing this email, click <a href="%%view_email_url%%">here</a> to view it in your browser.</p>
+
+    <footer>
+        <p>Best regards,<br>
+        The %%member_busname%% Team</p>
+        
+        <p>Our Address:</p>
+        <p>%%member_busname%%<br>
+        %%member_addr%%<br>
+        %%member_city%%, %%member_state%% %%member_postalcode%%</p>
+        
+        <p>Thank you for being a valued member. If you ever have any questions, don't hesitate to contact us!</p>
+    </footer>
+</body>
+</html>
