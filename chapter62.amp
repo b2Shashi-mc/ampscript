@@ -1,0 +1,57 @@
+
+%%[     
+        /*
+            This ampscript code return all subscribers associated with the child buisiness unit
+            Useful if the subscribers filters are applied to business unit level, or,
+            looking for the subscriber status in a child business unit
+            if executed from parent BU, change the client id on line no 11
+        */
+        
+        /* Specify the MID (Client ID) */
+        SET @clientID = AuthenticatedMemberID()
+
+        /* Create RetrieveRequest object for Subscriber */
+        SET @subscriberRetrieveRequest = CreateObject("RetrieveRequest")
+        SetObjectProperty(@subscriberRetrieveRequest, "ObjectType", "Subscriber")
+
+        /* Specify properties to retrieve */
+        AddObjectArrayItem(@subscriberRetrieveRequest, "Properties", "SubscriberKey")
+        AddObjectArrayItem(@subscriberRetrieveRequest, "Properties", "EmailAddress")
+        AddObjectArrayItem(@subscriberRetrieveRequest, "Properties", "Status")
+        AddObjectArrayItem(@subscriberRetrieveRequest, "Properties", "CreatedDate")
+        AddObjectArrayItem(@subscriberRetrieveRequest, "Properties", "Client.ID") /* MID filter */
+
+        /* Create and apply filter for Client.ID */
+        SET @clientIDFilter = CreateObject("SimpleFilterPart")
+        SetObjectProperty(@clientIDFilter, "Property", "Client.ID")
+        SetObjectProperty(@clientIDFilter, "SimpleOperator", "equals")
+        AddObjectArrayItem(@clientIDFilter, "Value", @clientID)
+
+        /* Assign the filter to the RetrieveRequest */
+        SetObjectProperty(@subscriberRetrieveRequest, "Filter", @clientIDFilter)
+
+        /* Perform the retrieve operation */
+        SET @subscriberResponse = InvokeRetrieve(@subscriberRetrieveRequest, @retrieveStatus, @retrieveRequestID)
+
+        /* Output retrieved results if found */
+        IF RowCount(@subscriberResponse) > 0 THEN
+        FOR @rowIndex = 1 TO RowCount(@subscriberResponse) DO
+            SET @subscriberRow = Row(@subscriberResponse, @rowIndex)
+            SET @retrievedSubscriberKey = Field(@subscriberRow, "SubscriberKey")
+            SET @retrievedEmail = Field(@subscriberRow, "EmailAddress")
+            SET @retrievedStatus = Field(@subscriberRow, "Status")
+            SET @retrievedDate = Field(@subscriberRow, "CreatedDate")
+            
+            /* Output subscriber details */
+            OutputLine(Concat("SubscriberKey: ", @retrievedSubscriberKey))
+            OutputLine(Concat("EmailAddress: ", @retrievedEmail))
+            OutputLine(Concat("Status: ", @retrievedStatus))
+            OutputLine(Concat("CreatedDate: ", @retrievedDate))
+        NEXT @rowIndex
+        ELSE
+        OutputLine("No subscribers found for the specified Client ID.")
+        ENDIF
+]%%
+
+
+                            

@@ -1,0 +1,41 @@
+
+%%[
+    /* 
+      This ampscript code block retrieves all subscriberkey associated with
+      a give email addess, this code is useful to be executed to find
+      all duplicate subscriberkey for a given email address
+    
+    */
+
+    /* Replace with the email address you are searching for */
+    SET @email="john.begood@example.com"
+
+    /* Create the RetrieveRequest object to retrieve the Subscriber by EmailAddress */
+    SET @subscriberRetrieveRequest = CreateObject("RetrieveRequest")
+    SetObjectProperty(@subscriberRetrieveRequest, "ObjectType", "Subscriber")
+    AddObjectArrayItem(@subscriberRetrieveRequest, "Properties", "EmailAddress")
+    AddObjectArrayItem(@subscriberRetrieveRequest, "Properties", "SubscriberKey")
+
+    /* Create and configure the filter for the RetrieveRequest */
+    SET @emailFilter = CreateObject("SimpleFilterPart")
+    SetObjectProperty(@emailFilter, "Property", "EmailAddress")
+    SetObjectProperty(@emailFilter, "SimpleOperator", "equals")
+    AddObjectArrayItem(@emailFilter, "Value", @email) 
+    SetObjectProperty(@subscriberRetrieveRequest, "Filter", @emailFilter)
+
+    /* Invoke the RetrieveRequest to get the Subscriber object */
+    SET @subscriberResponse = InvokeRetrieve(@subscriberRetrieveRequest, @retrieveStatus, @retrieveRequestID)
+
+    /* Iterate over the retrieved subscriber rows */
+    FOR @rowIndex = 1 TO RowCount(@subscriberResponse) DO
+    SET @subscriberRow = Row(@subscriberResponse, @rowIndex)
+    SET @retrievedSubscriberKey = Field(@subscriberRow, "SubscriberKey")
+
+    /* Output the SubscriberKey */
+    OutputLine(Concat("Retrieved SubscriberKey: ", @retrievedSubscriberKey))
+    NEXT @rowIndex
+
+]%%
+
+
+                            

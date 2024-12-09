@@ -1,0 +1,70 @@
+
+%%[
+  
+  /* Important caveat - 
+        Automation runs only if it's in scheduled state
+        it should not be paused or running state
+        execute this with utmost caution
+  */
+  /* Set the Automation Name to retrieve */
+  SET @automationName = "SOAP_API_Automation"
+
+  /* Create the RetrieveRequest object */
+  SET @retrieveRequest = CreateObject("RetrieveRequest")
+
+  /* Specify the object type and properties to retrieve */
+  SetObjectProperty(@retrieveRequest, "ObjectType", "Automation")
+  AddObjectArrayItem(@retrieveRequest, "Properties", "Name")
+  AddObjectArrayItem(@retrieveRequest, "Properties", "CustomerKey")
+
+  /* Create and configure the filter for the RetrieveRequest */
+  SET @filterPart = CreateObject("SimpleFilterPart")
+  SetObjectProperty(@filterPart, "Property", "Name")
+  SetObjectProperty(@filterPart, "SimpleOperator", "equals")
+  AddObjectArrayItem(@filterPart, "Value", @automationName)
+  SetObjectProperty(@retrieveRequest, "Filter", @filterPart)
+
+  /* Invoke the RetrieveRequest */
+  SET @retrieveResponse = InvokeRetrieve(@retrieveRequest, @statusMessage, @requestId)
+
+  /* Retrieve and validate the response */
+  IF RowCount(@retrieveResponse) > 0 THEN
+    SET @responseRow = Row(@retrieveResponse, 1) /* Retrieve the first row from the response */
+    SET @retrievedCustomerKey = Field(@responseRow, "CustomerKey")
+    SET @name = Field(@responseRow, "Name")
+
+    /* Output the name and CustomerKey with user-friendly messages */
+    OutputLine(Concat("Automation Name: ", @name))
+    OutputLine(Concat("CustomerKey: ", @retrievedCustomerKey))
+    
+    /* Create Automation object to start the automation */
+    SET @automation = CreateObject("Automation")
+    
+
+    SET @clientId=CreateObject("ClientID")
+    SetObjectProperty(@clientId, "ID", AuthenticatedMemberID())
+    SetObjectProperty(@clientId, "UserID", AuthenticatedEmployeeID())
+
+    SetObjectProperty(@automation, "CustomerKey", @retrievedCustomerKey)
+    SetObjectProperty(@automation, "Client", @clientId)
+
+
+
+    
+    /* Invoke the 'start' operation on the automation */
+    SET @statusCode = InvokePerform(@automation, "start", @statusMessage)
+
+    /* Handle the status message of the start operation */
+    IF @statusCode != "OK" THEN
+        OutputLine(Concat("Failed to start automation. Status Message: ", @statusMessage))
+    ELSE
+        OutputLine(@statusMessage)
+    ENDIF
+  ELSE
+    OutputLine("No automation found with the specified name.")
+  ENDIF
+
+]%%
+
+
+                            

@@ -1,0 +1,66 @@
+
+%%[
+  /* Set the name of the QueryDefinition to retrieve */
+  SET @queryName = "Query1"
+
+  /* Create a RetrieveRequest object for querying the QueryDefinition */
+  SET @retrieveRequest = CreateObject("RetrieveRequest")
+
+  /* Specify that we are retrieving a QueryDefinition and the properties we want */
+  SetObjectProperty(@retrieveRequest, "ObjectType", "QueryDefinition")
+  AddObjectArrayItem(@retrieveRequest, "Properties", "Name")      /* Retrieve the Name property */
+  AddObjectArrayItem(@retrieveRequest, "Properties", "ObjectID")  /* Retrieve the ObjectID property */
+
+  /* Create a filter for the RetrieveRequest to specify which QueryDefinition to retrieve */
+  SET @filterPart = CreateObject("SimpleFilterPart")
+  SetObjectProperty(@filterPart, "Property", "Name")              /* Filter by the Name property */
+  SetObjectProperty(@filterPart, "SimpleOperator", "equals")      /* Use an equality check */
+  AddObjectArrayItem(@filterPart, "Value", @queryName)            /* Set the filter value to @queryName */
+  SetObjectProperty(@retrieveRequest, "Filter", @filterPart)      /* Assign the filter to the RetrieveRequest */
+
+  /* Invoke the RetrieveRequest and store the response */
+  SET @retrieveResponse = InvokeRetrieve(@retrieveRequest, @statusMessage, @requestId)
+
+  /* Check if the RetrieveRequest was successful */
+  IF Empty(@retrieveResponse) OR RowCount(@retrieveResponse) == 0 THEN
+    OutputLine("No query found with the specified name or retrieve operation failed.")
+    IF NOT Empty(@statusMessage) THEN
+        OutputLine(Concat("Retrieve Status Message: ", @statusMessage))
+    ENDIF
+  ELSE
+    /* Retrieve the first row from the response */
+    SET @responseRow = Row(@retrieveResponse, 1)
+    SET @retrievedObjectID  = Field(@responseRow, "ObjectID")      /* Get the ObjectID of the QueryDefinition */
+    SET @name = Field(@responseRow, "Name")                       /* Get the Name of the QueryDefinition */
+
+    /* Output the name and ObjectID of the QueryDefinition for verification */
+    OutputLine(Concat("Query Definition Name: ", @name))
+    OutputLine(Concat("ObjectID: ", @retrievedObjectID))
+    
+    /* Create an instance of the QueryDefinition object for invoking the automation */
+    SET @query = CreateObject("QueryDefinition")
+    
+    /* Create ClientID object to specify the context for the automation */
+    SET @clientId = CreateObject("ClientID")
+    SetObjectProperty(@clientId, "ID", AuthenticatedMemberID())       /* Set the Member ID */
+    SetObjectProperty(@clientId, "UserID", AuthenticatedEmployeeID()) /* Set the User ID */
+
+    /* Attempt to set up the Automation object for starting */
+    SetObjectProperty(@query, "ObjectID", @retrievedObjectID) /* Use the retrieved ObjectID */
+    SetObjectProperty(@query, "Client", @clientId)            /* Attach the Client context */
+
+    /* Attempt to start the automation process by invoking the 'start' operation */
+    SET @statusCode = InvokePerform(@query, "start", @statusMessage)
+
+    /* Check if the automation start was successful */
+    IF @statusCode != "OK" THEN
+        /* Output error message if starting the automation failed */
+        OutputLine(Concat("Failed to start query. Status Message: ", @statusMessage))
+    ELSE
+        /* Output success message if starting the automation succeeded */
+        OutputLine("Automation started successfully.")
+    ENDIF
+  ENDIF
+
+]%%
+                            
