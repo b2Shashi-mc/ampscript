@@ -1,0 +1,52 @@
+%%[
+    /* Retrieve RMM data */
+    SET @replySubject = _RMM_ReplySubject
+    SET @replyBodyText = _RMM_ReplyBodyText
+    SET @replyBodyHTML = _RMM_ReplyBodyHTML
+    SET @replyHeaders = _RMM_Headers
+    SET @jobID = _RMM_JobID
+    SET @listID = _RMM_ListID
+    SET @batchID = _RMM_BatchID
+    SET @subscriberID = _RMM_SubscriberID
+    SET @recipientEmail = _RMM_RecipientEmailAddress
+    SET @subscriberKey = _RMM_RecipientSubscriberKey
+
+    /* Retrieve subscriber data */
+    SET @firstName = AttributeValue("FirstName")
+    SET @feedback = @replyBodyText  /* Assume text-based feedback for simplicity */
+    
+    /* Determine if the feedback is positive or negative */
+    IF (IndexOf(@feedback, "good") > 0) OR (IndexOf(@feedback, "excellent") > 0) THEN
+        SET @feedbackStatus = "Positive"
+    ELSE
+        SET @feedbackStatus = "Negative"
+    ENDIF
+
+    /* Store reply content into the Data Extension */
+    /* Assuming there's a Data Extension called 'Customer_Feedback' with the following columns:
+       SubscriberKey, FeedbackStatus, FeedbackContent, ReplySubject, ReplyBodyText, ReplyBodyHTML, Headers */
+    InsertDE("Customer_Feedback", 
+             "SubscriberKey", @subscriberKey,
+             "FeedbackStatus", @feedbackStatus,
+             "FeedbackContent", @feedback,
+             "ReplySubject", @replySubject,
+             "ReplyBodyText", @replyBodyText,
+             "ReplyBodyHTML", @replyBodyHTML,
+             "ReplyHeaders", @replyHeaders,
+             "JobID", @jobID,
+             "ListID", @listID,
+             "BatchID", @batchID
+    )
+
+    /* Personalize thank-you message based on feedback */
+    IF @feedbackStatus == "Positive" THEN
+        SET @thankYouSubject = "Thank You for Your Positive Feedback!"
+        SET @thankYouMessage = Concat("Dear ", @firstName, ", Thank you for your positive feedback on our product! We’re thrilled to hear you loved it.")
+    ELSE
+        SET @thankYouSubject = "Thank You for Your Feedback - We’re Here to Help!"
+        SET @thankYouMessage = Concat("Dear ", @firstName, ", We appreciate your feedback on our product. We’re sorry it didn’t meet your expectations. Please let us know how we can improve your experience.")
+    ENDIF
+
+    /* Send the personalized thank-you email */
+    OutputLine(v(@thankYouMessage))
+]%%

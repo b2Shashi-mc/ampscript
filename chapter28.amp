@@ -2,9 +2,9 @@
 %%[
     VAR @email, @domain, @isPremiumDomain
     SET @email = "user@premiumdomain.com"
-    SET @domain = Substring(@email, IndexOf(@email, "@") + 1, Length(@email))
+    SET @domain = Substring(@email, Add(IndexOf(@email, "@") , 1), Length(@email))
     /* List of premium domains */
-    SET @isPremiumDomain = IIf(Or(@domain == "premiumdomain.com", @domain == "anotherpremium.com"), True, False)
+    SET @isPremiumDomain = Iif((@domain == "premiumdomain.com"), 'True','False')
     IF @isPremiumDomain THEN
 ]%%
 <p>

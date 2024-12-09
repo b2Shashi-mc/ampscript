@@ -1,4 +1,3 @@
-
 %%[
     VAR @email, @isValidEmail
     SET @email = "user@example.com"
@@ -6,7 +5,7 @@
     SET @emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     /* Match the email against the pattern */
     SET @isValidEmail = RegExMatch(@email, @emailPattern, 0)
-    IF @isValidEmail == "true" THEN
+    IF Length(@isValidEmail) > 0 THEN
 ]%%
 <p>Your email is valid!</p>
     %%[ Else ]%%
